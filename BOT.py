@@ -47,12 +47,14 @@ async def help(ctx):
 
 	embed=discord.Embed(title="Список команд и их описание", description="Зачеркуныте команды временно недоступны ~~{}команда~~".format(pref), color=0x1fefec)
 	embed.add_field(name="{}help".format(pref), value="Показывает этот список", inline=True)
-	embed.add_field(name="{}cash/balance (_ или [player])".format(pref), value="Показывает ваш или баланс игрока", inline=True)
-	embed.add_field(name="{}beg/work".format(pref), value="Позволяет получить немного денег", inline=True)
-	embed.add_field(name="{}deposit [число]/put [число]".format(pref), value="Позволяет положить средства в банк для защиты", inline=True)
-	embed.add_field(name="{}withdraw/decision".format(pref), value="Команда для снаятия денег в банке", inline=True)
+	embed.add_field(name="{}cash / balance (_ или [player])".format(pref), value="Показывает ваш или баланс игрока", inline=True)
+	embed.add_field(name="{}beg / work".format(pref), value="Позволяет получить немного денег", inline=True)
+	embed.add_field(name="{}deposit [число] / put [число]".format(pref), value="Позволяет положить средства в банк для защиты", inline=True)
+	embed.add_field(name="{}withdraw / decision".format(pref), value="Команда для снаятия денег в банке", inline=True)
 	embed.add_field(name="{}send [player] [число]".format(pref), value="Ты отправишь игроку деньги", inline=True)
 	embed.add_field(name="{}slots [ставка]".format(pref), value="Ты сыграешь в слоты", inline=True)
+	embed.add_field(name="{}rob [ставка] [player]".format(pref), value="Ты ограбишь игрока", inline=True)
+
 
 	embed.add_field(name="~~{}bag~~".format(pref), value="Открыть свой инвентарь", inline=True)
 	embed.add_field(name="~~{}buy~~".format(pref), value="Купить вещь в магазине", inline=True)
@@ -131,9 +133,15 @@ async def __balance(ctx, member: discord.Member = None):
 		await open_account(ctx.author)
 
 		user = ctx.author
+		
 		users = await get_main_data()
+		
+		await ctx.send(f"Информация о балансе, для игрока {ctx.author.mention}")
+                
 
-		emb = discord.Embed(title = f"Баланс пользователя {ctx.author.name}",color = discord.Color.dark_gold())
+                
+		
+		emb = discord.Embed(title = f"Баланс пользователя {ctx.author}",color = discord.Color.dark_gold())
 
 		wallet_amt = users[str(user.id)]['Wallet']
 		bank_amt = users[str(user.id)]['Bank']
@@ -146,7 +154,7 @@ async def __balance(ctx, member: discord.Member = None):
 		await open_account(member)
 		user = member
 		users = await get_main_data()
-
+		await ctx.send(f"Информация о балансе, игрока {member.mention}")
 		em = discord.Embed(title = f"Баланс пользователя {member.name}",color = discord.Color.dark_gold())
 
 		wallet_amt = users[str(user.id)]['Wallet']
@@ -156,6 +164,62 @@ async def __balance(ctx, member: discord.Member = None):
 		em.add_field(name = "Банк", value = f"{bank_amt} <:coin:791004475098660904>")
 
 		await ctx.send(embed = em)
+
+
+@Bot.command()
+@commands.has_permissions(administrator= True)
+async def take(ctx, member: discord.Member , amount , var = "Wallet"):
+
+	await open_account(member)
+
+	users = await get_main_data()
+	user = member
+
+
+	wallet_amt = users[str(user.id)]['Wallet']
+	bank_amt = users[str(user.id)]['Bank']	
+
+	new_Walletamt = wallet_amt - int(amount)
+	new_Bankamt = bank_amt - int(amount)
+
+
+
+
+	if str(var) == "Bank" or str(var) == "bank":
+				if new_Bankamt < 0:
+					Bank_amt = users[str(user.id)]['Bank']
+					await update_bank(member, -1*int(Bank_amt),str(var))
+				else:	
+					await update_bank(member, -1*int(amount),str(var))
+				await ctx.send(f"Админы забрали из банка {amount} <:coin:791004475098660904> у игрока {member.mention}")
+	elif str(var) == "Wallet"  or str(var) == "wallet":
+
+				if new_Walletamt < 0:
+					Wallet_amt = wallet_amt = users[str(user.id)]['Wallet']
+					await update_bank(member, -1*int(Wallet_amt),str(var))
+				else:
+					await update_bank(member, -1*int(amount),str(var))
+				await ctx.send(f"Админы забрали из кошелька {amount} <:coin:791004475098660904> у игрока {member.mention}")
+	if var is None:
+				if new_Walletamt < 0:
+					Wallet_amt = wallet_amt = users[str(user.id)]['Wallet']
+					await update_bank(member, -1*int(Wallet_amt),str(var))
+				else:
+					await update_bank(member, -1*int(amount),str(var))
+				await ctx.send(f"Админы забрали из кошелька {amount} <:coin:791004475098660904> у игрока {member.mention}")
+					
+@Bot.command()
+@commands.has_permissions(administrator= True)
+async def give(ctx, member: discord.Member , amount):
+
+	await open_account(member)
+
+	users = await get_main_data()
+	user = ctx.author
+
+	await update_bank(member, 1*int(amount),"Bank")
+	await ctx.send(f"Админы дали игроку {member.mention} {amount} <:coin:791004475098660904>")
+
 @Bot.command(aliases = ['beg','work']) ### Работать
 async def __beg(ctx):
 	await open_account(ctx.author)
@@ -173,23 +237,25 @@ async def __beg(ctx):
 
 
 		
-		await ctx.send(f"Пользователь {ctx.author} получил {earn} <:coin:791004475098660904>!")
+		await ctx.send(f"Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!")
 
 
 		users[str(user.id)]['Wallet'] += earn
 
 		wait_beg.append(str(ctx.author.id))
 
+
+		with open('main.json','w') as f:
+			json.dump(users,f)
+
+
 		await asyncio.sleep(2*60*60)
 
 		wait_beg.remove(str(ctx.author.id))
 
 
-		with open('main.json','w') as f:
-			json.dump(users,f)
-
 	else:
-		emb = discord.Embed(description = f'**{ctx.author}** вы уже использовали эту команду. Команда работает раз в 2 часа.')		
+		emb = discord.Embed(description = f'**{ctx.author.mention}** вы уже использовали эту команду. Команда работает раз в 2 часа.')		
 		await ctx.send(embed = emb)
 
 
@@ -260,7 +326,7 @@ async def send(ctx, member: discord.Member,amount = None):
 
 	await update_bank(ctx.author, -1*amount, "Bank")
 	await update_bank(member, amount, "Bank")
-	await ctx.send(f"Ты успешно перевел пользователю {member} на счет {amount} <:coin:791004475098660904>")
+	await ctx.send(f"Ты успешно перевел пользователю {member.mention} на счет {amount} <:coin:791004475098660904>")
 
 
 @Bot.command() ### Слоты 3*
@@ -329,12 +395,12 @@ async def rob(ctx, member: discord.Member):
 		if random_event >= 30:
 			await update_bank(ctx.author, earning)
 			await update_bank(member, -1*earning)
-			await ctx.send(f"Ты удачно обокрал пользователя {member}. Ты своровал {earning} <:coin:791004475098660904>")
+			await ctx.send(f"Ты удачно обокрал пользователя {member.mention}. Ты своровал {earning} <:coin:791004475098660904>")
 		else:
 			plata = earning - (earning/3)
 			await update_bank(ctx.author, -1*palata)
 			await update_bank(member, earning)
-			await ctx.send(f"Тебя поймали за воровство у {member}. Тебе выписали штраф {earning} <:coin:791004475098660904>")
+			await ctx.send(f"Тебя поймали за воровство у {member.mention}. Тебе выписали штраф {earning} <:coin:791004475098660904>")
 
 		wait_rob.append(str(ctx.author.id))
 
@@ -345,7 +411,7 @@ async def rob(ctx, member: discord.Member):
 	else:
 
 
-		emb = discord.Embed(description = f'**{ctx.author}** вы уже использовали эту команду. Команда работает раз в 6 часов.')		
+		emb = discord.Embed(description = f'**{ctx.author.mention}** вы уже использовали эту команду. Команда работает раз в 6 часов.')		
 		await ctx.send(embed = emb)
 
 
