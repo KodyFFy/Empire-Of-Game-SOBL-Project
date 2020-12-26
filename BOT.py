@@ -22,8 +22,8 @@ async def on_ready():
 
 
 
-##################################################################################
-
+########################################################################################################
+#
 #mainshop = [{"name":"Watch","price":100,"description":"Time"},
 #            {"name":"Laptop","price":1000,"description":"Work"},
 #            {"name":"PC","price":10000,"description":"Gaming"}]
@@ -38,6 +38,10 @@ async def on_ready():
 #   	desc = item["description"]
 #   	em.add_field(name = name, value = f'{price} <:coin:791004475098660904> | Описание: {desc}')
 #   await ctx.send(embed = em)
+#
+########################################################################################################
+
+
 
 Bot.remove_command('help')
 @Bot.command()
