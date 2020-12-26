@@ -53,7 +53,7 @@ async def help(ctx):
 	embed.add_field(name="{}withdraw / decision".format(pref), value="Команда для снаятия денег в банке", inline=True)
 	embed.add_field(name="{}send [player] [число]".format(pref), value="Ты отправишь игроку деньги", inline=True)
 	embed.add_field(name="{}slots [ставка]".format(pref), value="Ты сыграешь в слоты", inline=True)
-	embed.add_field(name="{}rob [ставка] [player]".format(pref), value="Ты ограбишь игрока", inline=True)
+	embed.add_field(name="{}rob [player]".format(pref), value="Ты ограбишь игрока", inline=True)
 
 
 	embed.add_field(name="~~{}bag~~".format(pref), value="Открыть свой инвентарь", inline=True)
@@ -128,6 +128,10 @@ async def bag(ctx):
 
 @Bot.command(aliases = ['cash','balance']) ### Баланс карточка
 async def __balance(ctx, member: discord.Member = None):
+
+
+
+	
 	if member is None:
 
 		await open_account(ctx.author)
