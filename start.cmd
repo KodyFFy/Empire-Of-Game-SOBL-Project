@@ -1,5 +1,5 @@
 @echo off
 
-python BOT.py
+python bot.py
 
 pause
