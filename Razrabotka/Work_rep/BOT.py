@@ -350,6 +350,33 @@ async def rob(ctx, member: discord.Member):
 
 
 
+@Bot.command()
+async def rps(ctx,amount = None):
+
+	await open_account(ctx.author)
+	if amount == None:
+		
+
+		mes = await ctx.send("Игра: Камень, Ножницы, Бумага")
+
+
+		await mes.add_reaction("✂️")
+		await mes.add_reaction("🪨")
+		await mes.add_reaction("📰")
+
+		Player_id = ctx.author.id
+
+		mes_n = await ctx.channel.fetch_message(mes.id)
+
+		users = mes_n.reactions[0].users().flatten()
+		
+		if Player_id in users:
+			cho = "✂️"
+			comp = ["✂️","🪨","📰"]
+			com_cho = random.choice(comp)
+
+			if cho == com_cho:
+				print("Ничья")
 
 ################### Функции для экономики ###################
 
@@ -505,4 +532,4 @@ async def ch_pr():
 		await asyncio.sleep(10)
 
 Bot.loop.create_task(ch_pr())
-Bot.run(info["TOKEN"])
+Bot.run("NzkxOTc0MjE2OTQ5MDM5MTA0.X-W9dw.qzO1SrJUwVaKmihXOsYUr0gHgF8")
