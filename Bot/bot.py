@@ -21,6 +21,13 @@ async def on_ready():
 
 
 
+@Bot.event 
+async def on_command_error(ctx,error):
+	if isinstance(error, commands.MissingRequiredArgument):
+		await ctx.send("Ошибка аргумента. Возможно был введен неверный аргумент для команды. Воспользуйтесь коммандой <e!help> ,чтобы узнать больше о команде.")
+	if isinstance(error, commands.CommandNotFound):
+		await ctx.send("Такой команды нет. Воспользуйся <e!help>!")
+
 
 ########################################################################################################
 #
@@ -342,7 +349,7 @@ async def slots(ctx,amount = None):
 
 	await open_account(ctx.author)
 	if amount == None:
-		await ctx.send("Введите значение для вывода")
+		await ctx.send("Введите значение ставки")
 		return
 	bal = await update_bank(ctx.author)
 
