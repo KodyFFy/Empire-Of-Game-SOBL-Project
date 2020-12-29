@@ -4,7 +4,7 @@ from discord.ext import commands
 import random
 from bin import info
 import asyncio
-import datetime
+#import datetime
 
 pref = info['PREFIX']
 Bot = commands.Bot( command_prefix = pref )
@@ -19,14 +19,20 @@ async def on_ready():
 	print("Бот успешно запущен!")
 ### Розыгрыши ###
 
+#################
 
 
 @Bot.event 
 async def on_command_error(ctx,error):
 	if isinstance(error, commands.MissingRequiredArgument):
-		await ctx.send("Ошибка аргумента. Возможно был введен неверный аргумент для команды. Воспользуйтесь коммандой <e!help> ,чтобы узнать больше о команде.")
+		embed=discord.Embed(color=0xff0000)
+		embed.add_field(name="Ошибка!", value="Неверный аргумент. Возможно была допущена ошибка при вводе, попробуй `e!help` что-бы узнать больше о команде.", inline=True)
+		await ctx.send(embed=embed)
+
 	if isinstance(error, commands.CommandNotFound):
-		await ctx.send("Такой команды нет. Воспользуйся <e!help>!")
+		embed=discord.Embed(color=0xff0000)
+		embed.add_field(name="Ошибка!", value="Такой команды не существует! Воспользуйся `e!help`!", inline=True)
+		await ctx.send(embed=embed)
 
 
 ########################################################################################################
@@ -53,9 +59,6 @@ async def on_command_error(ctx,error):
 Bot.remove_command('help')
 @Bot.command()
 async def help(ctx):
-
-
-
 	embed=discord.Embed(title="Список команд и их описание", description="Зачеркуныте команды временно недоступны ~~{}команда~~".format(pref), color=0x1fefec)
 	embed.add_field(name="{}help".format(pref), value="Показывает этот список", inline=True)
 	embed.add_field(name="{}cash / balance (_ или [player])".format(pref), value="Показывает ваш или баланс игрока", inline=True)
@@ -78,70 +81,64 @@ async def help(ctx):
 
 @Bot.command() ### Продать предмет
 async def sell(ctx,item,amount = 1):
-    await open_account(ctx.author)
+	await open_account(ctx.author)
 
-    res = await sell_this(ctx.author,item,amount)
+	res = await sell_this(ctx.author,item,amount)
 
-    if not res[0]:
-        if res[1]==1:
-            await ctx.send("Такого товара нет!")
-            return
-        if res[1]==2:
-            await ctx.send(f"У тебя не хватает {amount} <:coin:791004475098660904> едениц {item} для продажи.")
-            return
-        if res[1]==3:
-            await ctx.send(f"У тебя нет {item} в рюкзаке.")
-            return
+	if not res[0]:
+		if res[1]==1:
+			await ctx.send("Такого товара нет!")
+			return
+		if res[1]==2:
+			await ctx.send(f"У тебя не хватает {amount} <:coin:791004475098660904> едениц {item} для продажи.")
+			return
+		if res[1]==3:
+			await ctx.send(f"У тебя нет {item} в рюкзаке.")
+			return
 
-    await ctx.send(f"Ты успешно продал {amount} едениц товара {item}.")
+	await ctx.send(f"Ты успешно продал {amount} едениц товара {item}.")
 
 
 @Bot.command() ### Купить предмет
 async def buy(ctx,item,amount = 1):
-    await open_account(ctx.author)
+	await open_account(ctx.author)
 
-    res = await buy_this(ctx.author,item,amount)
+	res = await buy_this(ctx.author,item,amount)
 
-    if not res[0]:
-        if res[1]==1:
-            await ctx.send("Такого товара нет!")
-            return
-        if res[1]==2:
-            await ctx.send(f"У тебя не хватате денег чтобы купить {amount} едениц товара {item}")
-            return
+	if not res[0]:
+		if res[1]==1:
+			await ctx.send("Такого товара нет!")
+			return
+		if res[1]==2:
+			await ctx.send(f"У тебя не хватате денег чтобы купить {amount} едениц товара {item}")
+			return
 
 
-    await ctx.send(f"Ты успешно купил {amount} едениц товара {item}")
-
+	await ctx.send(f"Ты успешно купил {amount} едениц товара {item}")
 
 @Bot.command() ### Вывод окна рюкзака
 async def bag(ctx):
-    await open_account(ctx.author)
-    user = ctx.author
-    users = await get_main_data()
+	await open_account(ctx.author)
+	user = ctx.author
+	users = await get_main_data()
 
-    try:
-        bag = users[str(user.id)]["Bag"]
-    except:
-        bag = []
-
-
-    em = discord.Embed(title = "Bag")
-    for item in bag:
-        name = item["Item"]
-        amount = item["Amount"]
-
-        em.add_field(name = name, value = amount)    
-
-    await ctx.send(embed = em) 
+	try:
+		bag = users[str(user.id)]["Bag"]
+	except:
+		bag = []
 
 
+	em = discord.Embed(title = "Bag")
+	for item in bag:
+		name = item["Item"]
+		amount = item["Amount"]
 
-@Bot.command(aliases = ['cash','balance']) ### Баланс карточка
+		em.add_field(name = name, value = amount)    
+
+	await ctx.send(embed = em) 
+
+@Bot.command(aliases = ['cash','balance']) ### Баланс игрока
 async def __balance(ctx, member: discord.Member = None):
-
-
-
 	
 	if member is None:
 
@@ -152,9 +149,9 @@ async def __balance(ctx, member: discord.Member = None):
 		users = await get_main_data()
 		
 		await ctx.send(f"Информация о балансе, для игрока {ctx.author.mention}")
-                
+				
 
-                
+				
 		
 		emb = discord.Embed(title = f"Баланс пользователя {ctx.author}",color = discord.Color.dark_gold())
 
@@ -179,7 +176,6 @@ async def __balance(ctx, member: discord.Member = None):
 		em.add_field(name = "Банк", value = f"{bank_amt} <:coin:791004475098660904>")
 
 		await ctx.send(embed = em)
-
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
@@ -222,7 +218,7 @@ async def take(ctx, member: discord.Member , amount , var = "Wallet"):
 				else:
 					await update_bank(member, -1*int(amount),str(var))
 				await ctx.send(f"Админы забрали из кошелька {amount} <:coin:791004475098660904> у игрока {member.mention}")
-					
+			
 @Bot.command()
 @commands.has_permissions(administrator= True)
 async def give(ctx, member: discord.Member , amount):
@@ -235,7 +231,7 @@ async def give(ctx, member: discord.Member , amount):
 	await update_bank(member, 1*int(amount),"Bank")
 	await ctx.send(f"Админы дали игроку {member.mention} {amount} <:coin:791004475098660904>")
 
-@Bot.command(aliases = ['beg','work']) ### Работать
+@Bot.command(aliases = ['beg','work']) ### Работа
 async def __beg(ctx):
 	await open_account(ctx.author)
 
@@ -249,10 +245,9 @@ async def __beg(ctx):
 
 
 	if not str(ctx.author.id) in wait_beg:
-
-
-		
-		await ctx.send(f"Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!")
+		embed=discord.Embed(color=0x00ffff)
+		embed.add_field(name="", value="Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!", inline=True)
+		await ctx.send(embed=embed)
 
 
 		users[str(user.id)]['Wallet'] += earn
@@ -270,33 +265,36 @@ async def __beg(ctx):
 
 
 	else:
-		emb = discord.Embed(description = f'**{ctx.author.mention}** вы уже использовали эту команду. Команда работает раз в 2 часа.')		
-		await ctx.send(embed = emb)
-
-
+		embed = discord.Embed(description = f"**{ctx.author.mention}** вы уже использовали эту команду. Команда работает раз в 2 часа.")		
+		await ctx.send(embed = embed)
 
 @Bot.command(aliases = ['withdraw','decision']) ### Снять деньги с банка
 async def __withdraw(ctx, amount = None):
 	await open_account(ctx.author)
 	if amount == None:
-		await ctx.send("Введите значение для вывода")
+		embed=discord.Embed(color=0xff0000)
+		embed.add_field(name="Ошибка!", value="Введите значение для вывода", inline=True)
+		await ctx.send(embed=embed)
 		return
 	bal = await update_bank(ctx.author)
 
 	amount = int(amount)
 
 	if amount > bal[1]:
-		await ctx.send("У тебя нет столько <:coin:791004475098660904> на счете :(")
+		embed=discord.Embed(color=0xff0000)
+		embed.add_field(name="Ошибка!", value="У тебя нет столько <:coin:791004475098660904> на счете **;~;**", inline=True)
+		await ctx.send(embed=embed)
 		return
-	if amount<0:
-		await ctx.send("Сумма <:coin:791004475098660904> должна быть положительной")
+
+	if amount < 0:
+		embed=discord.Embed(color=0xff0000)
+		embed.add_field(name="Ошибка!", value="Сумма <:coin:791004475098660904> должна быть положительной!", inline=True)
+		await ctx.send(embed=embed)
 		return
 
 	await update_bank(ctx.author, amount)
 	await update_bank(ctx.author, -1*amount, "Bank")
 	await ctx.send(f"Ты успешно снял {amount} <:coin:791004475098660904>")
-
-
 
 @Bot.command(aliases = ['deposit','put']) ### Сделать депозит в банке
 async def __deposit(ctx, amount = None):
@@ -319,8 +317,6 @@ async def __deposit(ctx, amount = None):
 	await update_bank(ctx.author, amount, "Bank")
 	await ctx.send(f"Ты успешно положил на счет {amount} <:coin:791004475098660904>")
 
-
-
 @Bot.command() ### Отправить деньги
 async def send(ctx, member: discord.Member,amount = None):
 	await open_account(ctx.author)
@@ -342,7 +338,6 @@ async def send(ctx, member: discord.Member,amount = None):
 	await update_bank(ctx.author, -1*amount, "Bank")
 	await update_bank(member, amount, "Bank")
 	await ctx.send(f"Ты успешно перевел пользователю {member.mention} на счет {amount} <:coin:791004475098660904>")
-
 
 @Bot.command() ### Слоты 3*
 async def slots(ctx,amount = None):
@@ -413,7 +408,7 @@ async def rob(ctx, member: discord.Member):
 			await ctx.send(f"Ты удачно обокрал пользователя {member.mention}. Ты своровал {earning} <:coin:791004475098660904>")
 		else:
 			plata = earning - (earning/3)
-			await update_bank(ctx.author, -1*palata)
+			await update_bank(ctx.author, -1*plata)
 			await update_bank(member, earning)
 			await ctx.send(f"Тебя поймали за воровство у {member.mention}. Тебе выписали штраф {earning} <:coin:791004475098660904>")
 
@@ -426,7 +421,7 @@ async def rob(ctx, member: discord.Member):
 	else:
 
 
-		emb = discord.Embed(description = f'**{ctx.author.mention}** вы уже использовали эту команду. Команда работает раз в 6 часов.')		
+		emb = discord.Embed(description = f"**{ctx.author.mention}** вы уже использовали эту команду. Команда работает раз в 6 часов.")		
 		await ctx.send(embed = emb)
 
 
@@ -470,120 +465,121 @@ async def update_bank(user, change = 0, mode = "Wallet"):
 
 
 async def buy_this(user,item_name,amount):
-    item_name = item_name.lower()
-    name_ = None
-    for item in mainshop:
-        name = item["name"].lower()
-        if name == item_name:
-            name_ = name
-            price = item["price"]
-            break
+	item_name = item_name.lower()
+	name_ = None
+	for item in mainshop:
+		name = item["name"].lower()
+		if name == item_name:
+			name_ = name
+			price = item["price"]
+			break
 
-    if name_ == None:
-        return [False,1]
+	if name_ == None:
+		return [False,1]
 
-    cost = price*amount
+	cost = price*amount
 
-    users = await get_main_data()
+	users = await get_main_data()
 
-    bal = await update_bank(user)
+	bal = await update_bank(user)
 
-    if bal[0]<cost:
-        return [False,2]
+	if bal[0]<cost:
+		return [False,2]
 
 
-    try:
-        index = 0
-        t = None
-        for thing in users[str(user.id)]["Bag"]:
-            n = thing["Item"]
-            if n == item_name:
-                old_amt = thing["Amount"]
-                new_amt = old_amt + amount
-                users[str(user.id)]["Bag"][index]["Amount"] = new_amt
-                t = 1
-                break
-            index+=1 
-        if t == None:
-            obj = {"Item":item_name , "Amount" : amount}
-            users[str(user.id)]["Bag"].append(obj)
-    except:
-        obj = {"Item":item_name , "Amount" : amount}
-        users[str(user.id)]["Bag"] = [obj]        
+	try:
+		index = 0
+		t = None
+		for thing in users[str(user.id)]["Bag"]:
+			n = thing["Item"]
+			if n == item_name:
+				old_amt = thing["Amount"]
+				new_amt = old_amt + amount
+				users[str(user.id)]["Bag"][index]["Amount"] = new_amt
+				t = 1
+				break
+			index+=1 
+		if t == None:
+			obj = {"Item":item_name , "Amount" : amount}
+			users[str(user.id)]["Bag"].append(obj)
+	except:
+		obj = {"Item":item_name , "Amount" : amount}
+		users[str(user.id)]["Bag"] = [obj]        
 
-    with open("main.json","w") as f:
-        json.dump(users,f)
+	with open("main.json","w") as f:
+		json.dump(users,f)
 
-    await update_bank(user,cost*-1,"Wallet")
+	await update_bank(user,cost*-1,"Wallet")
 
-    return [True,"Worked"]
+	return [True,"Worked"]
 
 
 async def sell_this(user,item_name,amount,price = None):
-    item_name = item_name.lower()
-    name_ = None
-    for item in mainshop:
-        name = item["name"].lower()
-        if name == item_name:
-            name_ = name
-            if price==None:
-                price = 0.9* item["price"]
-            break
+	item_name = item_name.lower()
+	name_ = None
+	for item in mainshop:
+		name = item["name"].lower()
+		if name == item_name:
+			name_ = name
+			if price==None:
+				price = 0.9* item["price"]
+			break
 
-    if name_ == None:
-        return [False,1]
+	if name_ == None:
+		return [False,1]
 
-    cost = price*amount
+	cost = price*amount
 
-    users = await get_main_data()
+	users = await get_main_data()
 
-    bal = await update_bank(user)
-
-
-    try:
-        index = 0
-        t = None
-        for thing in users[str(user.id)]["Bag"]:
-            n = thing["Item"]
-            if n == item_name:
-                old_amt = thing["Amount"]
-                new_amt = old_amt - amount
-                if new_amt < 0:
-                    return [False,2]
-                users[str(user.id)]["Bag"][index]["Amount"] = new_amt
-                t = 1
-                break
-            index+=1 
-        if t == None:
-            return [False,3]
-    except:
-        return [False,3]    
-
-    with open("main.json","w") as f:
-        json.dump(users,f)
-
-    await update_bank(user,cost,"Wallet")
-
-    return [True,"Worked"]
-
-################### Функции для экономики ###################
+	bal = await update_bank(user)
 
 
+	try:
+		index = 0
+		t = None
+		for thing in users[str(user.id)]["Bag"]:
+			n = thing["Item"]
+			if n == item_name:
+				old_amt = thing["Amount"]
+				new_amt = old_amt - amount
+				if new_amt < 0:
+					return [False,2]
+				users[str(user.id)]["Bag"][index]["Amount"] = new_amt
+				t = 1
+				break
+			index+=1 
+		if t == None:
+			return [False,3]
+	except:
+		return [False,3]    
 
-##################################################################################
+	with open("main.json","w") as f:
+		json.dump(users,f)
+
+	await update_bank(user,cost,"Wallet")
+
+	return [True,"Worked"]
+
+################### Функции для экономики ##############################################################
+
+########################################################################################################
 
 @Bot.event
 async def ch_pr():
 	await Bot.wait_until_ready()
-
-	pings = ["Пошел делать самогон!","Хочу прибавку к пенсии!","Ушел ебать соседку Риту!","Заснул старческим сном... Zzzz"]
+	pings = [
+		"Пошел делать самогон!", "Хочу прибавку к пенсии!",
+		"Ушел ебать соседку Риту!", "Заснул старческим сном... Zzzz",
+		"Ждет, когда выведут пенсию...", "Пошел пыхнуть на балкон!",
+		"Гоняет лысого...", "Пошел на рыбалку!", "Пошел копать огород!",
+		"А вот в наше время...........", "Пошел доить корову!"
+		]
 
 	while not Bot.is_closed():
-
 		ping = random.choice(pings)
 		await Bot.change_presence(activity=discord.Game(ping))
-
-		await asyncio.sleep(10)
+		await asyncio.sleep(30)
 
 Bot.loop.create_task(ch_pr())
 Bot.run(info["TOKEN"])
