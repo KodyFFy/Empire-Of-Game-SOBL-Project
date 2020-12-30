@@ -184,7 +184,7 @@ async def __balance(ctx, member: discord.Member = None):
 		await ctx.send(embed = em)
 
 @Bot.command()
-@commands.has_permissions(administrator= True)
+@commands.has_permissions(administrator = True)
 async def take(ctx, member: discord.Member , amount , var = "Wallet"):
 
 	await open_account(member)
@@ -246,10 +246,7 @@ async def __beg(ctx):
 
 	earn = random.randrange(300)
 
-
-
-
-
+	
 	if not str(ctx.author.id) in wait_beg:
 		embed=discord.Embed(color=0x00ffff)
 		embed.add_field(name="", value="Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!", inline=True)
