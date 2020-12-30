@@ -17,16 +17,19 @@ wait_rob = []
 @Bot.event
 async def on_ready():
 	print("Бот успешно запущен!")
+
 ### Розыгрыши ###
 
 #################
-
 
 @Bot.event 
 async def on_command_error(ctx,error):
 	if isinstance(error, commands.MissingRequiredArgument):
 		embed=discord.Embed(color=0xff0000)
-		embed.add_field(name="Ошибка!", value="Неверный аргумент. Возможно была допущена ошибка при вводе, попробуй `e!help` что-бы узнать больше о команде.", inline=True)
+		embed.add_field(name="Ошибка!",
+						value="Неверный аргумент. Возможно была допущена ошибка при вводе, попробуй `e!help` что-бы узнать больше о команде.",
+						inline=True
+						)
 		await ctx.send(embed=embed)
 
 	if isinstance(error, commands.CommandNotFound):
@@ -59,7 +62,10 @@ async def on_command_error(ctx,error):
 Bot.remove_command('help')
 @Bot.command()
 async def help(ctx):
-	embed=discord.Embed(title="Список команд и их описание", description="Зачеркуныте команды временно недоступны ~~{}команда~~".format(pref), color=0x1fefec)
+	embed=discord.Embed(title="Список команд и их описание",
+						description="Зачеркуныте команды временно недоступны ~~{}команда~~".format(pref),
+						color=0x1fefec
+						)
 	embed.add_field(name="{}help".format(pref), value="Показывает этот список", inline=True)
 	embed.add_field(name="{}cash / balance (_ или [player])".format(pref), value="Показывает ваш или баланс игрока", inline=True)
 	embed.add_field(name="{}beg / work".format(pref), value="Позволяет получить немного денег", inline=True)
@@ -561,8 +567,10 @@ async def sell_this(user,item_name,amount,price = None):
 
 	return [True,"Worked"]
 
-################### Функции для экономики ##############################################################
-
+################################## Функции для экономики ###############################################
+#
+#
+#
 ########################################################################################################
 
 @Bot.event
@@ -573,7 +581,8 @@ async def ch_pr():
 		"Ушел ебать соседку Риту!", "Заснул старческим сном... Zzzz",
 		"Ждет, когда выведут пенсию...", "Пошел пыхнуть на балкон!",
 		"Гоняет лысого...", "Пошел на рыбалку!", "Пошел копать огород!",
-		"А вот в наше время...........", "Пошел доить корову!"
+		"А вот в наше время...........", "Пошел доить корову!",
+		"Пошел бухать!", "Отдыхаю на даче!"
 		]
 
 	while not Bot.is_closed():
