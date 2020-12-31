@@ -248,9 +248,7 @@ async def __beg(ctx):
 
 	
 	if not str(ctx.author.id) in wait_beg:
-		embed=discord.Embed(color=0x00ffff)
-		embed.add_field(name="", value="Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!", inline=True)
-		await ctx.send(embed=embed)
+		await ctx.send(f"Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!")
 
 
 		users[str(user.id)]['Wallet'] += earn
