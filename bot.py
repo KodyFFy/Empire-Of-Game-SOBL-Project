@@ -85,63 +85,63 @@ async def help(ctx):
 
 
 
-@Bot.command() ### Продать предмет
-async def sell(ctx,item,amount = 1):
-	await open_account(ctx.author)
-
-	res = await sell_this(ctx.author,item,amount)
-
-	if not res[0]:
-		if res[1]==1:
-			await ctx.send("Такого товара нет!")
-			return
-		if res[1]==2:
-			await ctx.send(f"У тебя не хватает {amount} <:coin:791004475098660904> едениц {item} для продажи.")
-			return
-		if res[1]==3:
-			await ctx.send(f"У тебя нет {item} в рюкзаке.")
-			return
-
-	await ctx.send(f"Ты успешно продал {amount} едениц товара {item}.")
-
-
-@Bot.command() ### Купить предмет
-async def buy(ctx,item,amount = 1):
-	await open_account(ctx.author)
-
-	res = await buy_this(ctx.author,item,amount)
-
-	if not res[0]:
-		if res[1]==1:
-			await ctx.send("Такого товара нет!")
-			return
-		if res[1]==2:
-			await ctx.send(f"У тебя не хватате денег чтобы купить {amount} едениц товара {item}")
-			return
-
-
-	await ctx.send(f"Ты успешно купил {amount} едениц товара {item}")
-
-@Bot.command() ### Вывод окна рюкзака
-async def bag(ctx):
-	await open_account(ctx.author)
-	user = ctx.author
-	users = await get_main_data()
-
-	try:
-		bag = users[str(user.id)]["Bag"]
-	except:
-		bag = []
-
-
-	em = discord.Embed(title = "Bag")
-	for item in bag:
-		name = item["Item"]
-		amount = item["Amount"]
-
-		em.add_field(name = name, value = amount)    
-
-	await ctx.send(embed = em) 
+#@Bot.command() ### Продать предмет
+#async def sell(ctx,item,amount = 1):
+#	await open_account(ctx.author)
+#
+#	res = await sell_this(ctx.author,item,amount)
+#
+#	if not res[0]:
+#		if res[1]==1:
+#			await ctx.send("Такого товара нет!")
+#			return
+#		if res[1]==2:
+#			await ctx.send(f"У тебя не хватает {amount} <:coin:791004475098660904> едениц {item} для продажи.")
+#			return
+#		if res[1]==3:
+#			await ctx.send(f"У тебя нет {item} в рюкзаке.")
+#			return
+#
+#	await ctx.send(f"Ты успешно продал {amount} едениц товара {item}.")
+#
+#
+#@Bot.command() ### Купить предмет
+#async def buy(ctx,item,amount = 1):
+#	await open_account(ctx.author)
+#
+#	res = await buy_this(ctx.author,item,amount)
+#
+#	if not res[0]:
+#		if res[1]==1:
+#			await ctx.send("Такого товара нет!")
+#			return
+#		if res[1]==2:
+#			await ctx.send(f"У тебя не хватате денег чтобы купить {amount} едениц товара {item}")
+#			return
+#
+#
+#	await ctx.send(f"Ты успешно купил {amount} едениц товара {item}")
+#
+#@Bot.command() ### Вывод окна рюкзака
+#async def bag(ctx):
+#	await open_account(ctx.author)
+#	user = ctx.author
+#	users = await get_main_data()
+#
+#	try:
+#		bag = users[str(user.id)]["Bag"]
+#	except:
+#		bag = []
+#
+#
+#	em = discord.Embed(title = "Bag")
+#	for item in bag:
+#		name = item["Item"]
+#		amount = item["Amount"]
+#
+#		em.add_field(name = name, value = amount)    
+#
+#	await ctx.send(embed = em) 
 
 @Bot.command(aliases = ['cash','balance']) ### Баланс игрока
 async def __balance(ctx, member: discord.Member = None):
@@ -248,8 +248,9 @@ async def __beg(ctx):
 
 	
 	if not str(ctx.author.id) in wait_beg:
-		await ctx.send(f"Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!")
-
+		embed=discord.Embed(color=0x00ffff)
+		embed.add_field(name="", value="Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!", inline=True)
+		await ctx.send(embed=embed)
 
 		users[str(user.id)]['Wallet'] += earn
 
@@ -464,104 +465,103 @@ async def update_bank(user, change = 0, mode = "Wallet"):
 	return  bal
 
 
-
-async def buy_this(user,item_name,amount):
-	item_name = item_name.lower()
-	name_ = None
-	for item in mainshop:
-		name = item["name"].lower()
-		if name == item_name:
-			name_ = name
-			price = item["price"]
-			break
-
-	if name_ == None:
-		return [False,1]
-
-	cost = price*amount
-
-	users = await get_main_data()
-
-	bal = await update_bank(user)
-
-	if bal[0]<cost:
-		return [False,2]
-
-
-	try:
-		index = 0
-		t = None
-		for thing in users[str(user.id)]["Bag"]:
-			n = thing["Item"]
-			if n == item_name:
-				old_amt = thing["Amount"]
-				new_amt = old_amt + amount
-				users[str(user.id)]["Bag"][index]["Amount"] = new_amt
-				t = 1
-				break
-			index+=1 
-		if t == None:
-			obj = {"Item":item_name , "Amount" : amount}
-			users[str(user.id)]["Bag"].append(obj)
-	except:
-		obj = {"Item":item_name , "Amount" : amount}
-		users[str(user.id)]["Bag"] = [obj]        
-
-	with open("main.json","w") as f:
-		json.dump(users,f)
-
-	await update_bank(user,cost*-1,"Wallet")
-
-	return [True,"Worked"]
-
-
-async def sell_this(user,item_name,amount,price = None):
-	item_name = item_name.lower()
-	name_ = None
-	for item in mainshop:
-		name = item["name"].lower()
-		if name == item_name:
-			name_ = name
-			if price==None:
-				price = 0.9* item["price"]
-			break
-
-	if name_ == None:
-		return [False,1]
-
-	cost = price*amount
-
-	users = await get_main_data()
-
-	bal = await update_bank(user)
-
-
-	try:
-		index = 0
-		t = None
-		for thing in users[str(user.id)]["Bag"]:
-			n = thing["Item"]
-			if n == item_name:
-				old_amt = thing["Amount"]
-				new_amt = old_amt - amount
-				if new_amt < 0:
-					return [False,2]
-				users[str(user.id)]["Bag"][index]["Amount"] = new_amt
-				t = 1
-				break
-			index+=1 
-		if t == None:
-			return [False,3]
-	except:
-		return [False,3]    
-
-	with open("main.json","w") as f:
-		json.dump(users,f)
-
-	await update_bank(user,cost,"Wallet")
-
-	return [True,"Worked"]
-
+#async def buy_this(user,item_name,amount):
+#	item_name = item_name.lower()
+#	name_ = None
+#	for item in mainshop:
+#		name = item["name"].lower()
+#		if name == item_name:
+#			name_ = name
+#			price = item["price"]
+#			break
+#
+#	if name_ == None:
+#		return [False,1]
+#
+#	cost = price*amount
+#
+#	users = await get_main_data()
+#
+#	bal = await update_bank(user)
+#
+#	if bal[0]<cost:
+#		return [False,2]
+#
+#
+#	try:
+#		index = 0
+#		t = None
+#		for thing in users[str(user.id)]["Bag"]:
+#			n = thing["Item"]
+#			if n == item_name:
+#				old_amt = thing["Amount"]
+#				new_amt = old_amt + amount
+#				users[str(user.id)]["Bag"][index]["Amount"] = new_amt
+#				t = 1
+#				break
+#			index+=1 
+#		if t == None:
+#			obj = {"Item":item_name , "Amount" : amount}
+#			users[str(user.id)]["Bag"].append(obj)
+#	except:
+#		obj = {"Item":item_name , "Amount" : amount}
+#		users[str(user.id)]["Bag"] = [obj]        
+#
+#	with open("main.json","w") as f:
+#		json.dump(users,f)
+#
+#	await update_bank(user,cost*-1,"Wallet")
+#
+#	return [True,"Worked"]
+#
+#
+#async def sell_this(user,item_name,amount,price = None):
+#	item_name = item_name.lower()
+#	name_ = None
+#	for item in mainshop:
+#		name = item["name"].lower()
+#		if name == item_name:
+#			name_ = name
+#			if price==None:
+#				price = 0.9* item["price"]
+#			break
+#
+#	if name_ == None:
+#		return [False,1]
+#
+#	cost = price*amount
+#
+#	users = await get_main_data()
+#
+#	bal = await update_bank(user)
+#
+#
+#	try:
+#		index = 0
+#		t = None
+#		for thing in users[str(user.id)]["Bag"]:
+#			n = thing["Item"]
+#			if n == item_name:
+#				old_amt = thing["Amount"]
+#				new_amt = old_amt - amount
+#				if new_amt < 0:
+#					return [False,2]
+#				users[str(user.id)]["Bag"][index]["Amount"] = new_amt
+#				t = 1
+#				break
+#			index+=1 
+#		if t == None:
+#			return [False,3]
+#	except:
+#		return [False,3]    
+#
+#	with open("main.json","w") as f:
+#		json.dump(users,f)
+#
+#	await update_bank(user,cost,"Wallet")
+#
+#	return [True,"Worked"]
+#
 ################################## Функции для экономики ###############################################
 #
 #
