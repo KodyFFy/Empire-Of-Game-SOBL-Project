@@ -32,6 +32,7 @@ class Giveaway(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @commands.has_role("Призовщик")
     async def giveaway(self, ctx):
         await ctx.send("Давайте создадим форму для Конкурса!")
 
