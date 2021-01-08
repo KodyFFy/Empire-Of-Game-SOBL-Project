@@ -80,5 +80,5 @@ async def ch_pr():
 
 
 Bot.loop.create_task(ch_pr())
-#Bot.run(info["TOKEN"])
-Bot.run(info["TOKEN_TEST"])
+Bot.run(info["TOKEN_MAIN"])
+#Bot.run(info["TOKEN_TEST"])
