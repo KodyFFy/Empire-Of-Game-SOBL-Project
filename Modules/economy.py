@@ -242,11 +242,6 @@ class Economy(BOT.Cog):
 			await ctx.send(f"Ты выиграл ДЖЕКПОТ! Ты получил {al} <:coin:791004475098660904>")
 			await update_bank(ctx.author, 3*amount)
 
-		elif final[0] == final[1] or final[1] == final[2]:
-			await update_bank(ctx.author, 1.5*amount)
-			al = amount * 1.5
-			await ctx.send(f"Ты выиграл! Ты получил {al} <:coin:791004475098660904>")
-
 		else:
 			await update_bank(ctx.author, -1*amount)
 			await ctx.send("Ты проиграл свою ставку!")
