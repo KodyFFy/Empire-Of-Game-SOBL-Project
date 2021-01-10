@@ -14,7 +14,7 @@ class Help(BOT.Cog):
 	async def help(self, ctx):
 		embed = discord.Embed(title="Список команд и их описание",
 							  description="Зачеркуныте команды временно недоступны ~~{}команда~~".format(pref),
-							  color=0x1fefec)
+							  color=0x7289da)
 		embed.add_field(name="{}help".format(pref),
 						value="Показывает этот список", inline=True)
 		embed.add_field(name="{}cash / balance (_ или [player])".format(pref), value="Показывает ваш или баланс игрока", inline=True)

@@ -20,18 +20,16 @@ Bot.remove_command('help')
 @Bot.event
 async def on_command_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
-		embed = discord.Embed(color=0xff0000)
-		embed.add_field(name="Ошибка!",
-			value="Неверный аргумент. Возможно была допущена ошибка при вводе, попробуй `e!help` что-бы узнать больше о команде.",
-			inline=True)
+		embed=discord.Embed(title="Ошибка!",
+   			description="Неверный аргумент. Возможно была допущена ошибка при вводе, попробуй `e!help` что-бы узнать больше о команде.",
+    		color=0xef3417)
 		await ctx.send(embed=embed)
 
 	if isinstance(error, commands.CommandNotFound):
-		embed = discord.Embed(color=0xff0000)
-		embed.add_field(
-			name="Ошибка!", value="Такой команды не существует! Воспользуйся `e!help`!", inline=True)
+		embed=discord.Embed(title="Ошибка!",
+   			description="Такой команды не существует! Воспользуйся `e!help`!",
+    		color=0xef3417)
 		await ctx.send(embed=embed)
-
 
 Bot.load_extension("Modules.help")
 Bot.load_extension("Modules.economy")
@@ -59,7 +57,7 @@ Bot.load_extension("Modules.giveaway")
 
 
 @Bot.event
-async def ch_pr():
+async def __change_pings():
 	await Bot.wait_until_ready()
 	pings = [
 		"Пошел делать самогон!", "Хочу прибавку к пенсии!",
@@ -76,6 +74,7 @@ async def ch_pr():
 		await asyncio.sleep(30)
 
 
-Bot.loop.create_task(ch_pr())
+Bot.loop.create_task(__change_pings())
+
 Bot.run(info["TOKEN_MAIN"])
 # Bot.run(info["TOKEN_TEST"])
