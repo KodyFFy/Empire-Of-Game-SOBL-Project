@@ -306,7 +306,7 @@ class Economy(BOT.Cog):
 
 		bal = await update_bank(member)
 
-		if ctx.author == ctx.author:
+		if ctx.author.mention == member.mention:
 			embed = discord.Embed(title="Ошибка!", description="Ты не можешь обокрасть самого себя!",
 				  				  color=0xef3417)
 			await ctx.send(embed=embed)
