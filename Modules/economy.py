@@ -107,6 +107,11 @@ class Economy(BOT.Cog):
 								  color=0x7289da)
 			await ctx.send(embed=embed)
 
+	@BOT.command()
+	@BOT.has_permissions(administrator=True)
+	async def give(self, ctx, member: discord.Member, amount):
+
+		await open_account(member)
 		users = await get_main_data()
 		user = ctx.author
 
