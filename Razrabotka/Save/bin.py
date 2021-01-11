@@ -1,5 +1,0 @@
-info = {
-	'TOKEN':'Nzg5ODI3NzA2NTUyMzIwMDIw.X93uXw.K2b7cdBdsrydLXgOF4rfieQdzgQ',
-	'PREFIX':'e!',
-	'ID':'789827706552320020'
-}
