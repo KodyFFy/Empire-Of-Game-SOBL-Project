@@ -141,7 +141,7 @@ class Economy(BOT.Cog):
 			wait_beg.append(str(ctx.author.id))
 
 			with open('main.json', 'w') as f:
-				json.dump(users, f)
+				json.dump(users, f, indent = 3)
 
 			await asyncio.sleep(2*60*60)
 			wait_beg.remove(str(ctx.author.id))
@@ -324,7 +324,7 @@ class Economy(BOT.Cog):
 				await ctx.send(embed=embed)
 				return
 
-			earning = random.randrange(0, bal[0]//3)
+			earning = int(random.randrange(0, bal[0]//4))
 			random_event = random.randint(0, 100)
 
 			if random_event >= 30:
@@ -336,7 +336,7 @@ class Economy(BOT.Cog):
 				await ctx.send(embed=embed)
 
 			else:
-				plata = earning - (earning/3)
+				plata = int(earning - (earning//4))
 				await update_bank(ctx.author, -1*plata)
 				await update_bank(member, earning)
 				embed = discord.Embed(title="Oops...!",
@@ -362,14 +362,18 @@ async def open_account(user):
 	users = await get_main_data()
 
 	if str(user.id) in users:
+		users[str(user.id)]["Name"] = user.name
+		with open('main.json', 'w') as f:
+			json.dump(users, f, indent = 3)
 		return False
 	else:
 		users[str(user.id)] = {}
+		users[str(user.id)]["Name"] = user.name
 		users[str(user.id)]["Wallet"] = 0
 		users[str(user.id)]["Bank"] = 0
 
 	with open('main.json', 'w') as f:
-		json.dump(users, f)
+		json.dump(users, f, indent = 3)
 	return True
 
 
@@ -386,7 +390,7 @@ async def update_bank(user, change=0, mode="Wallet"):
 	users[str(user.id)][mode] += change
 
 	with open('main.json', 'w') as f:
-		json.dump(users, f)
+		json.dump(users, f, indent = 3)
 	bal = [users[str(user.id)]["Wallet"], users[str(user.id)]["Bank"]]
 	return bal
 
@@ -495,7 +499,7 @@ def setup(Bot):
 	#		users[str(user.id)]["Bag"] = [obj]
 	#
 	#	with open("main.json","w") as f:
-	#		json.dump(users,f)
+	#		json.dump(users, f, indent = 3)
 	#
 	#	await update_bank(user,cost*-1,"Wallet")
 	#
@@ -543,7 +547,7 @@ def setup(Bot):
 	#		return [False,3]
 	#
 	#	with open("main.json","w") as f:
-	#		json.dump(users,f)
+	#		json.dump(users, f, indent = 3)
 	#
 	#	await update_bank(user,cost,"Wallet")
 	#
