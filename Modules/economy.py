@@ -167,7 +167,7 @@ class Economy(BOT.Cog):
 
 		if amount > bal[1]:
 			embed = discord.Embed(title="Ошибка!",
-								  description="У тебя нет столько <:coin:791004475098660904> на счете **;~;**",
+								  description="У Вас нет столько <:coin:791004475098660904> на счете **;~;**",
 								  color=0xef3417)
 			await ctx.send(embed=embed)
 			return
@@ -181,7 +181,7 @@ class Economy(BOT.Cog):
 
 		await update_bank(ctx.author, amount)
 		await update_bank(ctx.author, -1*amount, "Bank")
-		embed=discord.Embed(title="Готово!", description=f"Ты успешно снял {amount} <:coin:791004475098660904>",
+		embed=discord.Embed(title="Готово!", description=f"Вы успешно сняли {amount} <:coin:791004475098660904>",
 		    color=0x7289da)
 		await ctx.send(embed=embed)
 
@@ -201,7 +201,7 @@ class Economy(BOT.Cog):
 
 		if amount > bal[0]:
 			embed = discord.Embed(title="Ошибка!",
-								  description="У тебя нет столько <:coin:791004475098660904> на счете **;~;**",
+								  description="У Вас нет столько <:coin:791004475098660904> на счете **;~;**",
 								  color=0xef3417)
 			await ctx.send(embed=embed)
 			return
@@ -215,7 +215,7 @@ class Economy(BOT.Cog):
 
 		await update_bank(ctx.author, -1*amount)
 		await update_bank(ctx.author, amount, "Bank")
-		embed = discord.Embed(title="Готово!", description=f"Ты успешно положил на счет {amount} <:coin:791004475098660904>",
+		embed = discord.Embed(title="Готово!", description=f"Вы успешно положили на счет {amount} <:coin:791004475098660904>",
 							  color=0x7289da)
 		await ctx.send(embed=embed)
 
@@ -236,7 +236,7 @@ class Economy(BOT.Cog):
 
 		if amount > bal[1]:
 			embed = discord.Embed(title="Ошибка!",
-								  description="У тебя нет столько <:coin:791004475098660904> на счете **;~;**",
+								  description="У Вас нет столько <:coin:791004475098660904> на счете **;~;**",
 								  color=0xef3417)
 			await ctx.send(embed=embed)
 			return
@@ -251,7 +251,7 @@ class Economy(BOT.Cog):
 		await update_bank(ctx.author, -1*amount, "Bank")
 		await update_bank(member, amount, "Bank")
 		embed = discord.Embed(title="Готово!",
-							  description=f"Ты успешно перевел пользователю {member.mention} на счет {amount} <:coin:791004475098660904>",
+							  description=f"Вы успешно перевели пользователю {member.mention} на счет {amount} <:coin:791004475098660904>",
 							  color=0x7289da)
 		await ctx.send(embed=embed)
 
@@ -270,7 +270,7 @@ class Economy(BOT.Cog):
 		amount = int(amount)
 		if amount > bal[0]:
 			embed = discord.Embed(title="Ошибка!",
-								  description="У тебя нет столько <:coin:791004475098660904> на счете **;~;**",
+								  description="У Вас нет столько <:coin:791004475098660904> на счете **;~;**",
 								  color=0xef3417)
 			await ctx.send(embed=embed)
 			return
@@ -292,15 +292,15 @@ class Economy(BOT.Cog):
 		if final[0] == final[1] == final[2]:
 			al = amount * 3
 			embed = discord.Embed(title="**Wow!**",
-								  description=f"Ты выиграл **ДЖЕКПОТ!** Ты получил {al} <:coin:791004475098660904>",
+								  description=f"Вы выиграли **ДЖЕКПОТ!** Ты получил {al} <:coin:791004475098660904>",
 								  color=0x7289da)
 			await ctx.send(embed=embed)
 			await update_bank(ctx.author, 3*amount)
 
 		else:
 			await update_bank(ctx.author, -1*amount)
-			embed = discord.Embed(title="Ты проиграл!",
-								  description="Ты проиграл свою ставку! В следующий раз ты точно выиграешь!",
+			embed = discord.Embed(title="Вы проиграли!",
+								  description="Вы проиграли свою ставку! В следующий раз ты точно выиграешь!",
 								  color=0x7289da)
 			await ctx.send(embed=embed)
 
@@ -312,7 +312,7 @@ class Economy(BOT.Cog):
 		bal = await update_bank(member)
 
 		if ctx.author.mention == member.mention:
-			embed = discord.Embed(title="Ошибка!", description="Ты не можешь обокрасть самого себя!",
+			embed = discord.Embed(title="Ошибка!", description="Вы не можете обокрасть самого себя!",
 				  				  color=0xef3417)
 			await ctx.send(embed=embed)
 			return
@@ -331,7 +331,7 @@ class Economy(BOT.Cog):
 				await update_bank(ctx.author, earning)
 				await update_bank(member, -1*earning)
 				embed = discord.Embed(title="Готово!",
-									  description=f"Ты удачно обокрал пользователя {member.mention}. Ты своровал {earning} <:coin:791004475098660904>",
+									  description=f"Вы удачно обокрали пользователя {member.mention}. Вы своровали {earning} <:coin:791004475098660904>",
 									  color=0x7289da)
 				await ctx.send(embed=embed)
 
@@ -340,7 +340,7 @@ class Economy(BOT.Cog):
 				await update_bank(ctx.author, -1*plata)
 				await update_bank(member, earning)
 				embed = discord.Embed(title="Oops...!",
-									  description=f"Тебя поймали за воровство у {member.mention}. Тебе выписали штраф {earning} <:coin:791004475098660904>",
+									  description=f"Вас поймали за воровство у {member.mention}. Вам выписали штраф в размере {earning} <:coin:791004475098660904>",
 									  color=0x7289da)
 				await ctx.send(embed=embed)
 

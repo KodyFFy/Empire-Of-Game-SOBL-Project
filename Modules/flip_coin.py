@@ -30,18 +30,20 @@ class Flip(BOT.Cog):
 
 		if oborot == "Орел":
 
-			rand = random.randint(0,1) # 0 - Орел; 1 - Решка;
+			rand = random.randint(0, 1) # 0 - Орел; 1 - Решка;
 
 			if amount == None:
 				
 				if rand == 0:
 					await ctx.send("Фортуна улыбается вам! Вы угадали!")
+
 				else:
 					await ctx.send("Рандом послал вас. Вы проиграли!")
 
 			else:
 				if balance < int(amount):
 					await ctx.send("У тебя нет столько денег для игры")
+
 				else:
 					reserv = int(amount)
 
@@ -50,12 +52,12 @@ class Flip(BOT.Cog):
 						users[str(user.id)]['Wallet'] = int(users[str(user.id)]['Wallet']) + int(reserv + (reserv * 0.5))
 						with open('main.json', 'w') as f:
 							json.dump(users, f, indent = 3)
+
 					else:
 						await ctx.send("Рандом послал вас. Вы проиграли!")
 						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) - reserv
 						with open('main.json', 'w') as f:
 							json.dump(users, f, indent = 3)
-
 
 		elif oborot == "Решка":
 
@@ -65,25 +67,31 @@ class Flip(BOT.Cog):
 				
 				if rand == 0:
 					await ctx.send("Фортуна улыбается вам! Вы угадали!")
+
 				else:
 					await ctx.send("Рандом послал вас. Вы проиграли!")
 
 			else:
 				if balance < int(amount):
 					await ctx.send("У тебя нет столько денег для игры")
+				
 				else:
 					reserv = int(amount)
 
 					if rand == 0:
 						await ctx.send(f"Фортуна улыбается вам! Вы угадали! Фортуна улыбается вам! Вы угадали! Выигрыш - {reserv + (reserv * 0.5)}")
 						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) + (reserv + (reserv * 0.5))
+				
 					else:
 						await ctx.send("Рандом послал вас. Вы проиграли!")
 						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) - reserv
+					
 					with open('main.json', 'w') as f:
 						json.dump(users, f, indent = 3)
 
 		else:
 			await ctx.send("Вы не ввели Орел или Решка или вы ошиблись в слове. Попробуйте снова!")
+
+
 def setup(Bot):
 	Bot.add_cog(Flip(Bot))

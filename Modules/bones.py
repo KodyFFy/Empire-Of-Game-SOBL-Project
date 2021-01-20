@@ -1,4 +1,4 @@
-﻿import discord
+import discord
 from discord.ext import commands as BOT
 import json
 import random
@@ -21,7 +21,8 @@ class Bones(BOT.Cog):
 
 		balance = int(users[str(user.id)]['Wallet'])
 		if num > 6 or num == "" or num < 1:
-			await ctx.send("Ошибка оргумента числа. Возможно вы ввели: отрицательное число/ничего/число больше 6/число меньше 1/текст")
+			await ctx.send("Ошибка аргумента числа. Возможно вы ввели: отрицательное число / ничего / число больше 6 / число меньше 1 / текст")
+		
 		else:
 			if amount == None:
 
@@ -31,9 +32,11 @@ class Bones(BOT.Cog):
 					await ctx.send(f"Кубик 🎲 упал и на нем число {ran}. Вы угадали поздравляю!")
 				else:
 					await ctx.send(f"Кубик 🎲 упал и на нем число {ran}. Увы вы не угадали :(")
+
 			else:
 				if balance < int(amount):
 					await ctx.send("У тебя нет столько денег для игры")
+
 				else:
 					num = int(num)
 					user = ctx.author
@@ -43,7 +46,6 @@ class Bones(BOT.Cog):
 					users = await econom.get_main_data()	
 
 					balance = int(users[str(user.id)]['Wallet'])
-					print(balance)
 
 					reserv = int(amount)
 
@@ -53,12 +55,14 @@ class Bones(BOT.Cog):
 						await ctx.send(f"Кубик 🎲 упал и на нем число {ran}. Вы угадали поздравляю! Ваш куш - {reserv + (reserv * 3.5)} <:coin:791004475098660904> ")
 
 						users[str(user.id)]['Wallet'] = int(users[str(user.id)]['Wallet']) + int(reserv + (reserv * 3.5))
+						
 						with open('main.json', 'w') as f:
 							json.dump(users, f, indent = 3)
 
 					else:
 						await ctx.send(f"Кубик 🎲 упал и на нем число {ran}. Увы вы не угадали :(")
 						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) - reserv
+						
 						with open('main.json', 'w') as f:
 							json.dump(users, f, indent = 3)
 
