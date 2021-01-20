@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands as BOT
-from bin import info
+from Imports.bin import info
 
 pref = info["PREFIX"]
 

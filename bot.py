@@ -2,11 +2,13 @@ import json
 import discord
 from discord.ext import commands
 import random
-from bin import info
+from Imports.bin import info
 import asyncio
 #import datetime
 
-pref = info['PREFIX']
+pref = info['PREFIX_M']
+#pref = info["PREFIX_T"]
+
 Bot = commands.Bot(command_prefix=pref)
 name_Shop_id = "Roles"
 
@@ -34,7 +36,12 @@ async def on_command_error(ctx, error):
 Bot.load_extension("Modules.help")
 Bot.load_extension("Modules.economy")
 Bot.load_extension("Modules.giveaway")
+Bot.load_extension("Modules.flip_coin")
+Bot.load_extension("Modules.bones")
 
+#Bot.load_extension("Modules.tick_tack_toe")
+
+# Bot.load_extension("Modules.rpg")
 
 ########################################################################################################
 #
@@ -77,4 +84,4 @@ async def __change_pings():
 Bot.loop.create_task(__change_pings())
 
 Bot.run(info["TOKEN_MAIN"])
-# Bot.run(info["TOKEN_TEST"])
+#Bot.run(info["TOKEN_TEST"])
