@@ -15,7 +15,7 @@
 # 	@BOT.command()
 # 	async def choice(self, ctx, skill):
 
-# 		with open("Modules/jsons/rpg.json", "r") as f:
+# 		with open("Modules/JSONs/rpg.json", "r") as f:
 # 			users = json.load(f)
 # 		if str(ctx.author.id) in users:
 # 			await ctx.send("Вы уже выбрали класс")
@@ -28,7 +28,7 @@
 # 			users[str(ctx.author.id)]["Skills"]["TANK"] = 0
 # 			users[str(ctx.author.id)]["Skills"]["HEALER"] = 0
 
-# 			with open("Modules/jsons/rpg.json", "w") as f:
+# 			with open("Modules/JSONs/rpg.json", "w") as f:
 # 				json.dump(users, f, indent = 3)
 
 # 			await ctx.send("Вы выбрали класс DPS")
@@ -40,7 +40,7 @@
 # 			users[str(ctx.author.id)]["Skills"]["TANK"] = 1
 # 			users[str(ctx.author.id)]["Skills"]["HEALER"] = 0
 
-# 			with open("Modules/jsons/rpg.json", "w") as f:
+# 			with open("Modules/JSONs/rpg.json", "w") as f:
 # 				json.dump(users, f, indent = 2)
 
 # 			await ctx.send("Вы выбрали класс TANK")
@@ -52,7 +52,7 @@
 # 			users[str(ctx.author.id)]["Skills"]["TANK"] = 0
 # 			users[str(ctx.author.id)]["Skills"]["HEALER"] = 1
 
-# 			with open("Modules/jsons/rpg.json", "w") as f:
+# 			with open("Modules/JSONs/rpg.json", "w") as f:
 # 				json.dump(users, f, indent = 2)
 
 # 			await ctx.send("Вы выбрали класс HEALER")
@@ -60,7 +60,7 @@
 # 	@BOT.command()
 # 	async def rechoice(self, ctx, skill):
 
-# 		with open("Modules/jsons/rpg.json", "r") as f:
+# 		with open("Modules/JSONs/rpg.json", "r") as f:
 # 			users = json.load(f)
 
 # 		if skill == "DPS":
@@ -71,7 +71,7 @@
 # 			users[str(ctx.author.id)]["Skills"]["TANK"] = 0
 # 			users[str(ctx.author.id)]["Skills"]["HEALER"] = 0
 
-# 			with open("Modules/jsons/rpg.json", "w") as f:
+# 			with open("Modules/JSONs/rpg.json", "w") as f:
 # 				json.dump(users, f, indent = 2)
 
 # 			await ctx.send("Вы выбрали класс DPS")
@@ -83,7 +83,7 @@
 # 			users[str(ctx.author.id)]["Skills"]["TANK"] = 1
 # 			users[str(ctx.author.id)]["Skills"]["HEALER"] = 0
 
-# 			with open("Modules/jsons/rpg.json", "w") as f:
+# 			with open("Modules/JSONs/rpg.json", "w") as f:
 # 				json.dump(users, f, indent = 2)
 
 # 			await ctx.send("Вы выбрали класс TANK")
@@ -95,7 +95,7 @@
 # 			users[str(ctx.author.id)]["Skills"]["TANK"] = 0
 # 			users[str(ctx.author.id)]["Skills"]["HEALER"] = 1
 
-# 			with open("Modules/jsons/rpg.json", "w") as f:
+# 			with open("Modules/JSONs/rpg.json", "w") as f:
 # 				json.dump(users, f, indent = 2)
 
 # 			await ctx.send("Вы выбрали класс HEALER")
@@ -103,12 +103,10 @@
 # 	@BOT.command()
 # 	async def train(self, ctx, skill):
 
-# 		with open("Modules/jsons/rpg.json", "r") as f:
+# 		with open("Modules/JSONs/rpg.json", "r") as f:
 # 			users = json.load(f)
 # 		lvlup = random.uniform(0.05,0.35)
-# 		print(lvlup)
 # 		lvlup = round(lvlup,3)
-# 		print(lvlup)
 # 		lvl_skill =  users[str(ctx.author.id)]["Skills"][str(skill)]
 # 		clas = users[str(ctx.author.id)]["Class"]
 
@@ -139,7 +137,7 @@
 # 				users[str(ctx.author.id)]["Skills"][str(skill)] += lvlup
 # 				await ctx.send(f"Ваш уровень скила {skill} повышен на {lvlup}")
 
-# 		with open("Modules/jsons/rpg.json", "w") as f:
+# 		with open("Modules/JSONs/rpg.json", "w") as f:
 # 			json.dump(users, f, indent = 2)
 
 # 		if clas == "TANK":
@@ -200,7 +198,7 @@
 # 	@BOT.command()
 # 	async def lvl(slef, ctx):
 
-# 		with open("Modules/jsons/rpg.json", "r") as f:
+# 		with open("Modules/JSONs/rpg.json", "r") as f:
 # 			users = json.load(f)
 
 # 		DPS = users[str(ctx.author.id)]["Skills"]["DPS"]

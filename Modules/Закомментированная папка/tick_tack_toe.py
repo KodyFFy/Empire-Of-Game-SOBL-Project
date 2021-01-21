@@ -13,7 +13,7 @@ class tick_tack_toe(BOT.Cog):
 
 	@BOT.command()
 	async def stavka(self, ctx, amount):
-		with open("main.json", "r") as f:
+		with open("JSONs/main.json", "r") as f:
 			users = json.load(f)
 		bal = [users[str(user.id)]["Wallet"], users[str(user.id)]["Bank"]]
 
@@ -21,7 +21,7 @@ class tick_tack_toe(BOT.Cog):
 		await ctx.send(f"{amount} успешно зарезервированны для игры!")
 		rezerv = amount
 
-		with open("Modules/jsons/reserv.json", 'w') as f:
+		with open("Modules/JSONs/reserv.json", 'w') as f:
 			users = json.load(f)
 
 	@BOT.command()
@@ -33,8 +33,6 @@ class tick_tack_toe(BOT.Cog):
 		text = player1 + " vs " + player2
 
 		guild = ctx.guild
-
-		print(text)
 
 		if member == ctx.author:
 			await ctx.send("Нельзя играть против себя")
@@ -52,7 +50,6 @@ class tick_tack_toe(BOT.Cog):
 
 			channel = await ctx.guild.create_text_channel(name =f'{text}', overwrites = perms )
 		
-			print(channel.id)
 			await channel.send("__**||@here||**__")
 			await channel.send("__**Добро пожаловать в игру: Крестики-Нолики!**__")
 			await channel.send("Вы можете поставить ставку на свою победу. Победитель забирает __**ВСЕ!!!**__ . Ожидайте когда бот попросит ввести вашу ставку!")
@@ -74,7 +71,7 @@ class tick_tack_toe(BOT.Cog):
 
 				answers[i] = answer				
 
-				with open("main.json", "r") as f:
+				with open("JSONs/main.json", "r") as f:
 					users = json.load(f)
 				bal1 = [users[str(ctx.author.id)]["Wallet"], users[str(ctx.author.id)]["Bank"]]
 
@@ -84,7 +81,6 @@ class tick_tack_toe(BOT.Cog):
 				bal2 -= int(answers[1])
 
 				prize = answers[0] + answers[1]
-				print(prize)
 
 def setup(Bot):
 	Bot.add_cog(tick_tack_toe(Bot))

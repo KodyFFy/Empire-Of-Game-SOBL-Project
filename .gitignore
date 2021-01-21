@@ -1,5 +1,6 @@
+JSONs/
 __pycache__/
+Logs/
 env/
 .vscode/
 .vs/
-main.json/

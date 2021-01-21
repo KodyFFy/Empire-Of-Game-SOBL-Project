@@ -25,15 +25,11 @@ class Flip(BOT.Cog):
 		users = await econom.get_main_data()	
 
 		balance = int(users[str(user.id)]['Wallet'])
-		print(balance)
-
 
 		if oborot == "Орел":
-
 			rand = random.randint(0, 1) # 0 - Орел; 1 - Решка;
 
 			if amount == None:
-				
 				if rand == 0:
 					await ctx.send("Фортуна улыбается вам! Вы угадали!")
 
@@ -48,23 +44,22 @@ class Flip(BOT.Cog):
 					reserv = int(amount)
 
 					if rand == 0:
-						await ctx.send(f"Фортуна улыбается вам! Вы угадали! Выигрыш - {reserv + (reserv * 0.5)}")
-						users[str(user.id)]['Wallet'] = int(users[str(user.id)]['Wallet']) + int(reserv + (reserv * 0.5))
-						with open('main.json', 'w') as f:
+						await ctx.send(f"Фортуна улыбается вам! Вы угадали! Выигрыш - {reserv + (reserv * 1//6)} <:coin:791004475098660904>")
+						users[str(user.id)]['Wallet'] = int(users[str(user.id)]['Wallet']) + int(reserv + (reserv * 1//6))
+						
+						with open('JSONs/main.json', 'w') as f:
 							json.dump(users, f, indent = 3)
 
 					else:
 						await ctx.send("Рандом послал вас. Вы проиграли!")
 						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) - reserv
-						with open('main.json', 'w') as f:
+						
+						with open('JSONs/main.json', 'w') as f:
 							json.dump(users, f, indent = 3)
 
 		elif oborot == "Решка":
-
 			rand = random.randint(0,1) # 1 - Орел; 0 - Решка;
-
 			if amount == None:
-				
 				if rand == 0:
 					await ctx.send("Фортуна улыбается вам! Вы угадали!")
 
@@ -79,14 +74,14 @@ class Flip(BOT.Cog):
 					reserv = int(amount)
 
 					if rand == 0:
-						await ctx.send(f"Фортуна улыбается вам! Вы угадали! Фортуна улыбается вам! Вы угадали! Выигрыш - {reserv + (reserv * 0.5)}")
-						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) + (reserv + (reserv * 0.5))
+						await ctx.send(f"Фортуна улыбается вам! Вы угадали! Фортуна улыбается вам! Вы угадали! Выигрыш - {reserv + (reserv * 1//6)} <:coin:791004475098660904>")
+						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) + (reserv + (reserv * 1//6))
 				
 					else:
 						await ctx.send("Рандом послал вас. Вы проиграли!")
 						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) - reserv
 					
-					with open('main.json', 'w') as f:
+					with open('JSONs/main.json', 'w') as f:
 						json.dump(users, f, indent = 3)
 
 		else:

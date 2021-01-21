@@ -140,7 +140,7 @@ class Economy(BOT.Cog):
 
 			wait_beg.append(str(ctx.author.id))
 
-			with open('main.json', 'w') as f:
+			with open('JSONs/main.json', 'w') as f:
 				json.dump(users, f, indent = 3)
 
 			await asyncio.sleep(2*60*60)
@@ -363,7 +363,7 @@ async def open_account(user):
 
 	if str(user.id) in users:
 		users[str(user.id)]["Name"] = user.name
-		with open('main.json', 'w') as f:
+		with open('JSONs/main.json', 'w') as f:
 			json.dump(users, f, indent = 3)
 		return False
 	else:
@@ -372,13 +372,13 @@ async def open_account(user):
 		users[str(user.id)]["Wallet"] = 0
 		users[str(user.id)]["Bank"] = 0
 
-	with open('main.json', 'w') as f:
+	with open('JSONs/main.json', 'w') as f:
 		json.dump(users, f, indent = 3)
 	return True
 
 
 async def get_main_data():
-	with open("main.json", "r") as f:
+	with open("JSONs/main.json", "r") as f:
 		users = json.load(f)
 
 	return users
@@ -389,7 +389,7 @@ async def update_bank(user, change=0, mode="Wallet"):
 
 	users[str(user.id)][mode] += change
 
-	with open('main.json', 'w') as f:
+	with open('JSONs/main.json', 'w') as f:
 		json.dump(users, f, indent = 3)
 	bal = [users[str(user.id)]["Wallet"], users[str(user.id)]["Bank"]]
 	return bal
@@ -498,7 +498,7 @@ def setup(Bot):
 	#		obj = {"Item":item_name , "Amount" : amount}
 	#		users[str(user.id)]["Bag"] = [obj]
 	#
-	#	with open("main.json","w") as f:
+	#	with open("JSONs/main.json","w") as f:
 	#		json.dump(users, f, indent = 3)
 	#
 	#	await update_bank(user,cost*-1,"Wallet")
@@ -546,7 +546,7 @@ def setup(Bot):
 	#	except:
 	#		return [False,3]
 	#
-	#	with open("main.json","w") as f:
+	#	with open("JSONs/main.json","w") as f:
 	#		json.dump(users, f, indent = 3)
 	#
 	#	await update_bank(user,cost,"Wallet")

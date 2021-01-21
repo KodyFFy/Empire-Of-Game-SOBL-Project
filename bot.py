@@ -4,9 +4,18 @@ from discord.ext import commands
 import random
 from Imports.bin import info
 import asyncio
+import logging
 
-pref = info['PREFIX_MAIN']
-# pref = info["PREFIX_TEST"]
+logging.basicConfig(level=logging.INFO)
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.INFO)
+handler = logging.FileHandler(filename='Logs/discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s: %(levelname)s: %(name)s: %(message)s'))
+logger.addHandler(handler)
+
+# pref = info['PREFIX_MAIN']
+pref = info["PREFIX_TEST"]
 
 Bot = commands.Bot(command_prefix=pref)
 name_Shop_id = "Roles"
@@ -14,7 +23,7 @@ name_Shop_id = "Roles"
 
 @Bot.event
 async def on_ready():
-	print("Бот успешно запущен!")
+	print(f"Бот успешно запущен!")
 Bot.remove_command('help')
 
 
@@ -82,5 +91,5 @@ async def __change_pings():
 
 Bot.loop.create_task(__change_pings())
 
-Bot.run(info["TOKEN_MAIN"])
-# Bot.run(info["TOKEN_TEST"])
+# Bot.run(info["TOKEN_MAIN"])
+Bot.run(info["TOKEN_TEST"])

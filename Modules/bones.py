@@ -56,14 +56,14 @@ class Bones(BOT.Cog):
 
 						users[str(user.id)]['Wallet'] = int(users[str(user.id)]['Wallet']) + int(reserv + (reserv * 3.5))
 						
-						with open('main.json', 'w') as f:
+						with open('JSONs/main.json', 'w') as f:
 							json.dump(users, f, indent = 3)
 
 					else:
 						await ctx.send(f"Кубик 🎲 упал и на нем число {ran}. Увы вы не угадали :(")
 						users[str(user.id)]['Wallet']  = int(users[str(user.id)]['Wallet']) - reserv
 						
-						with open('main.json', 'w') as f:
+						with open('JSONs/main.json', 'w') as f:
 							json.dump(users, f, indent = 3)
 
 def setup(Bot):

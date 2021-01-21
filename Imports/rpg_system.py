@@ -8,7 +8,7 @@
 
 # 	wins = 0
 
-# 	with open("Modules/jsons/rpg.json", "r") as f:
+# 	with open("Modules/JSONs/rpg.json", "r") as f:
 # 		users = json.load(f)
 
 # 	for i in range(num_dps):

@@ -100,8 +100,6 @@ class Giveaway(commands.Cog):
 
 		users.pop(users.index(ctx.guild.me))
 
-		print(users)
-
 		if ctx.author in users:
 			users.pop(users.index(ctx.author))
 
@@ -203,11 +201,6 @@ class Giveaway(commands.Cog):
 
 
 
-	# 	print(dps)
-	# 	print(tanks)
-	# 	print(healers)
-
-
 	# 	num_dps = len(dps)
 	# 	num_tank = len(tank)
 	# 	num_healer = len(healers)
@@ -220,7 +213,7 @@ class Giveaway(commands.Cog):
 	# 	min = 3
 	# 	max = 12
 
-	# 	with open("Modules/jsons/rpg.json", "r") as f:
+	# 	with open("Modules/JSONs/rpg.json", "r") as f:
 	# 		users = json.load(f)
 
 	# 	if  lover < min:
