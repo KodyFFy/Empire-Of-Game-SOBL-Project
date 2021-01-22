@@ -5,12 +5,25 @@ import random
 from Imports.bin import info
 import asyncio
 import logging
+import os
+
+
+
+os.remove("Logs/discord_befor.log")
+
+
+os.rename("Logs/discord_correct.log","Logs/discord_befor.log")
 
 logging.basicConfig(level=logging.INFO)
 
+
+file_new = open("Logs/discord_correct.log",'w+')
+file_new.close()
+
+
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
-handler = logging.FileHandler(filename='Logs/discord.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename='Logs/discord_correct.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s: %(levelname)s: %(name)s: %(message)s'))
 logger.addHandler(handler)
 
