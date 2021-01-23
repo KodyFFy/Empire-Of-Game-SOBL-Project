@@ -71,7 +71,7 @@ Bot.load_extension("Modules.bones")
 #            {"name":"PC","price":10000,"description":"Gaming"}]
 #
 #
-# @Bot.command() ### Вывыод окна магазина
+# @Bot.command() ### Вывыод окна магазина 
 # async def shop(ctx):
 #    em = discord.Embed(title = "Магазин")
 #   for item in mainshop:
@@ -104,5 +104,5 @@ async def __change_pings():
 
 Bot.loop.create_task(__change_pings())
 
-# Bot.run(info["TOKEN_MAIN"])
+#Bot.run(info["TOKEN_MAIN"])
 Bot.run(info["TOKEN_TEST"])

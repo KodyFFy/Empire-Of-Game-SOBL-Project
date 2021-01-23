@@ -1,10 +1,12 @@
 ﻿import re
 import random
 import asyncio
+import json
 
 import discord
 from discord.ext import commands
 from Imports.util import GetMessage
+import Modules.economy as econom
 
 
 time_regex = re.compile(r"(?:(\d{1,5})(h|s|m|d))+?")
@@ -111,7 +113,28 @@ class Giveaway(commands.Cog):
 
 		print(winner)
 
-		await channel.send(f"**Поздравляем победителя - {winner.mention}!**\nОбратитесь к {ctx.author.mention} или к админам для получения приза.")
+
+		spl = answers[2].split()
+		print(spl)
+		print(winner)
+		print(ctx.author)
+
+		if spl[1] == "<:coin:791004475098660904>" or spl[1] == "\U0001fa99":
+
+			user = winner
+
+			await econom.open_account(user)
+
+			users = await econom.get_main_data()	
+
+			users[str(user.id)]['Bank'] += int(spl[0])
+
+			with open('JSONs/main.json', 'w') as f:
+				json.dump(users, f, indent = 3)
+
+			await channel.send(f"**Поздравляем победителя - {winner.mention}!**\nВам зачисленно на счет {answers[2]}.")
+		else:
+			await channel.send(f"**Поздравляем победителя - {winner.mention}!**\nОбратитесь к {ctx.author.mention} или к админам для получения приза {answers[2]}.")
 
 
 
