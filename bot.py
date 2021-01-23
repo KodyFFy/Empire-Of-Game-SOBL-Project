@@ -1,33 +1,32 @@
 import json
-import discord
-from discord.ext import commands
 import random
-from Imports.bin import info
 import asyncio
+
 import logging
 import os
 
+import discord
+from discord.ext import commands
+
+from Imports.bin import info
+
+class Logger():
+	os.remove("Logs/discord_before.log")
+	os.rename("Logs/discord_currect.log","Logs/discord_before.log")
+
+	logging.basicConfig(level=logging.INFO)
+
+	file_new = open("Logs/discord_currect.log","w+")
+	file_new.close()
+
+	logger = logging.getLogger("discord")
+	logger.setLevel(logging.INFO)
+	handler = logging.FileHandler(filename="Logs/discord_currect.log", encoding="utf-8", mode="w")
+	handler.setFormatter(logging.Formatter("%(asctime)s: %(levelname)s: %(name)s: %(message)s"))
+	logger.addHandler(handler)
 
 
-os.remove("Logs/discord_befor.log")
-
-
-os.rename("Logs/discord_correct.log","Logs/discord_befor.log")
-
-logging.basicConfig(level=logging.INFO)
-
-
-file_new = open("Logs/discord_correct.log",'w+')
-file_new.close()
-
-
-logger = logging.getLogger('discord')
-logger.setLevel(logging.INFO)
-handler = logging.FileHandler(filename='Logs/discord_correct.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s: %(levelname)s: %(name)s: %(message)s'))
-logger.addHandler(handler)
-
-# pref = info['PREFIX_MAIN']
+# pref = info["PREFIX_MAIN"]
 pref = info["PREFIX_TEST"]
 
 Bot = commands.Bot(command_prefix=pref)
@@ -37,19 +36,21 @@ name_Shop_id = "Roles"
 @Bot.event
 async def on_ready():
 	print(f"Бот успешно запущен!")
-Bot.remove_command('help')
+Bot.remove_command("help")
 
 
 @Bot.event
 async def on_command_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
-		embed=discord.Embed(title="Ошибка!",
+		embed=discord.Embed(
+			title="Ошибка!",
 			description=f"Неверный аргумент, попробуйте `{pref}help` что-бы узнать больше о командах.",
 			color=0xef3417)
 		await ctx.send(embed=embed)
 
 	if isinstance(error, commands.CommandNotFound):
-		embed=discord.Embed(title="Ошибка!",
+		embed=discord.Embed(
+			title="Ошибка!",
 			description=f"Такой команды не существует! Попробуйте воспользутесь командой `{pref}help`!",
 			color=0xef3417)
 		await ctx.send(embed=embed)
@@ -78,7 +79,7 @@ Bot.load_extension("Modules.bones")
 #   	name = item["name"]
 #   	price = item["price"]
 #   	desc = item["description"]
-#   	em.add_field(name = name, value = f'{price} <:coin:791004475098660904> | Описание: {desc}')
+#   	em.add_field(name = name, value = f"{price} <:coin:791004475098660904> | Описание: {desc}")
 #   await ctx.send(embed = em)
 #
 ########################################################################################################

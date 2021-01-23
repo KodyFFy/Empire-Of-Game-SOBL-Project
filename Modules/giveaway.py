@@ -1,10 +1,11 @@
-﻿import re
+import re
 import random
 import asyncio
 import json
 
 import discord
 from discord.ext import commands
+
 from Imports.util import GetMessage
 import Modules.economy as econom
 
@@ -22,8 +23,7 @@ def convert(argument):
 			time += time_dict[value] * float(key)
 		except KeyError:
 			raise commands.BadArgument(
-				f"{value} is an invalid time key! h|m|s|d are valid arguments"
-			)
+				f"{value} is an invalid time key! h|m|s|d are valid arguments")
 		except ValueError:
 			raise commands.BadArgument(f"{key} не число!")
 	return round(time)
@@ -50,14 +50,21 @@ class Giveaway(commands.Cog):
 			answer = await GetMessage(self.bot, ctx, question[0], question[1])
 
 			if not answer:
-				await ctx.send("Ты не успел заполнить форму. Заполняй быстрей!")
+				embed=discord.Embed(title="Ошибка!",
+					description=f"Вы не устели заполнить форму? Значит заполняйте быстрее...",
+					color=0xef3417)
+				await ctx.send(embed=embed)
 				return
 
 			answers[i] = answer
-		embed = discord.Embed(name="Конкурс!")
+		embed = discord.Embed(
+			name="Конкурс!")
+		
 		for key, value in answers.items():
 			embed.add_field(
-				name=f"Вопрос: `{questionList[key][0]}`", value=f"Ответ: `{value}`", inline=False)
+				name=f"Вопрос: `{questionList[key][0]}`",
+				value=f"Ответ: `{value}`",
+				inline=False)
 
 		m = await ctx.send("Все верно?", embed=embed)
 		await m.add_reaction("✅")
@@ -68,8 +75,8 @@ class Giveaway(commands.Cog):
 				"reaction_add",
 				timeout=60,
 				check=lambda reaction, user: user == ctx.author
-				and reaction.message.channel == ctx.channel
-			)
+				and reaction.message.channel == ctx.channel)
+
 		except asyncio.TimeoutError:
 			await ctx.send("Ошибка создания. Пожалуйста, попробуйте еще раз.")
 			return
@@ -85,21 +92,20 @@ class Giveaway(commands.Cog):
 
 		giveawayEmbed = discord.Embed(
 			title="🎉 __**Конкурс!**__ 🎉",
-			description=answers[2]
-		)
+			description=answers[2])
+
 		giveawayEmbed.set_footer(
 			text=f"Конкурс окнчится через {time} секунд, после отправки этого сообщения.")
 
 		await channel.send("||@here|| Начало Конкурса!")
+
 		giveawayMessage = await channel.send(embed=giveawayEmbed)
 		await giveawayMessage.add_reaction("🎉")
 
 		await asyncio.sleep(time)
 
 		message = await channel.fetch_message(giveawayMessage.id)
-
 		users = await message.reactions[0].users().flatten()
-
 		users.pop(users.index(ctx.guild.me))
 
 		if ctx.author in users:
@@ -110,29 +116,20 @@ class Giveaway(commands.Cog):
 			return
 
 		winner = random.choice(users)
-
-		print(winner)
-
-
 		spl = answers[2].split()
-		print(spl)
-		print(winner)
-		print(ctx.author)
 
 		if spl[1] == "<:coin:791004475098660904>" or spl[1] == "\U0001fa99":
-
 			user = winner
-
 			await econom.open_account(user)
 
 			users = await econom.get_main_data()	
+			users[str(user.id)]["Bank"] += int(spl[0])
 
-			users[str(user.id)]['Bank'] += int(spl[0])
-
-			with open('JSONs/main.json', 'w') as f:
+			with open("JSONs/main.json", "w") as f:
 				json.dump(users, f, indent = 3)
 
 			await channel.send(f"**Поздравляем победителя - {winner.mention}!**\nВам зачисленно на счет {answers[2]}.")
+
 		else:
 			await channel.send(f"**Поздравляем победителя - {winner.mention}!**\nОбратитесь к {ctx.author.mention} или к админам для получения приза {answers[2]}.")
 
@@ -143,14 +140,14 @@ class Giveaway(commands.Cog):
 
 
 
-	# @commands.command(aliases=['Raid', 'raid'])
+	# @commands.command(aliases=["Raid", "raid"])
 	# @commands.has_permissions(administrator=True)
 	# async def __raid(self, ctx):
 
 	# 	questionList = [
 	# 		["В какой канал опубликовать ивент?", "Какой-то канал."],
 	# 		["Как долго будет идти ивент?", "`d|h|m|s`"],
-	# 		["Сложность", 'Любая сложность(Легко, Сложно)'],
+	# 		["Сложность", "Любая сложность(Легко, Сложно)"],
 	# 		["Какой лучший приз будет получен?", "Любой лучший приз"],
 	# 		["Какой обычный приз будет получен?", "Любой приз"],
 	# 		["Какой штраф будет при пройгрыше", "Например: Понижение"]
