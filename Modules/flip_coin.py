@@ -1,10 +1,11 @@
-import discord
-from discord.ext import commands as BOT
 import json
 import random
 import asyncio
-from Imports.bin import info
 
+import discord
+from discord.ext import commands as BOT
+
+from Imports.bin import info
 import Modules.economy as econom
 
 
