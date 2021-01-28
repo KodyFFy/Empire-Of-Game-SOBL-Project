@@ -21,6 +21,7 @@ class Flip(BOT.Cog):
 
 		users = await econom.get_main_data()	
 		balance = int(users[str(user.id)]["Wallet"])
+		oborot = oborot.lower()
 		if oborot == "Орел":
 			rand = random.randint(0, 1) # 0 - Орел; 1 - Решка;
 			if amount == None:
