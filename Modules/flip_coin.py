@@ -22,7 +22,7 @@ class Flip(BOT.Cog):
 		users = await econom.get_main_data()	
 		balance = int(users[str(user.id)]["Wallet"])
 		oborot = oborot.lower()
-		if oborot == "Орел":
+		if oborot == "орел":
 			rand = random.randint(0, 1) # 0 - Орел; 1 - Решка;
 			if amount == None:
 				if rand == 0:
@@ -74,7 +74,7 @@ class Flip(BOT.Cog):
 						with open("JSONs/main.json", "w") as f:
 							json.dump(users, f, indent = 3)
 
-		elif oborot == "Решка":
+		elif oborot == "решка":
 			rand = random.randint(0,1) # 1 - Орел; 0 - Решка;
 			if amount == None:
 				if rand == 0:
