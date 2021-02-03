@@ -1,3 +1,4 @@
+beautifulsoup4==4.9.3
 config==0.5.0.post0
 discord==1.0.1
 discord.py==1.5.1

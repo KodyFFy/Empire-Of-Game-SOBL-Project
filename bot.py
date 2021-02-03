@@ -1,4 +1,3 @@
-import json
 import random
 import asyncio
 
@@ -9,6 +8,7 @@ import discord
 from discord.ext import commands
 
 from Imports.bin import info
+
 
 class Logger():
 	os.remove("Logs/discord_before.log")
@@ -64,8 +64,7 @@ Bot.load_extension("Modules.flip_coin")
 Bot.load_extension("Modules.bones")
 Bot.load_extension("Modules.get_info")
 Bot.load_extension("Modules.bonus")
-Bot.load_extension("Modules.tick_tack_toe")
-
+# Bot.load_extension("Modules.tick_tack_toe")
 # Bot.load_extension("Modules.rpg")
 
 ########################################################################################################
