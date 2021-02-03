@@ -12,11 +12,11 @@ from Imports.bin import info
 
 class Logger():
 	os.remove("Logs/discord_before.log")
-	os.rename("Logs/discord_currect.log","Logs/discord_before.log")
+	os.rename("Logs/discord_currect.log", "Logs/discord_before.log")
 
 	logging.basicConfig(level=logging.INFO)
 
-	file_new = open("Logs/discord_currect.log","w+")
+	file_new = open("Logs/discord_currect.log", "w+")
 	file_new.close()
 
 	logger = logging.getLogger("discord")
@@ -55,13 +55,16 @@ async def on_command_error(ctx, error):
 			color=0xef3417)
 		await ctx.send(embed=embed)
 
+
+
 Bot.load_extension("Modules.help")
 Bot.load_extension("Modules.economy")
 Bot.load_extension("Modules.giveaway")
 Bot.load_extension("Modules.flip_coin")
 Bot.load_extension("Modules.bones")
-
-#Bot.load_extension("Modules.tick_tack_toe")
+Bot.load_extension("Modules.get_info")
+Bot.load_extension("Modules.bonus")
+Bot.load_extension("Modules.tick_tack_toe")
 
 # Bot.load_extension("Modules.rpg")
 
@@ -105,5 +108,5 @@ async def __change_pings():
 
 Bot.loop.create_task(__change_pings())
 
-#Bot.run(info["TOKEN_MAIN"])
+# Bot.run(info["TOKEN_MAIN"])
 Bot.run(info["TOKEN_TEST"])

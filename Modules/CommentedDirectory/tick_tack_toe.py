@@ -7,11 +7,11 @@ from discord.ext import commands as BOT
 from Imports.bin import info
 from Imports.util import GetMessage
 
+
 class TickTakToe(BOT.Cog):
 
 	def __init__(self, Bot):
 		self.Bot = Bot
-
 
 	@BOT.command()
 	async def stavka(self, ctx, amount):
@@ -61,8 +61,9 @@ class TickTakToe(BOT.Cog):
 					read_messages=False)
 				}
 
-			channel = await ctx.guild.create_text_channel(name=f"{text}",
-														  overwrites = perms)
+			channel = await ctx.guild.create_text_channel(
+				name=f"{text}",
+				overwrites = perms)
 		
 			await channel.send("__**||@here||**__")
 			await channel.send("__**Добро пожаловать в игру: Крестики-Нолики!**__")
@@ -91,7 +92,7 @@ class TickTakToe(BOT.Cog):
 				with open("JSONs/main.json", "r") as f:
 					users = json.load(f)
 				bal1 = [users[str(ctx.author.id)]["Wallet"],
-									users[str(ctx.author.id)]["Bank"]]
+		users[str(ctx.author.id)]["Bank"]]
 
 				bal2 = [users[str(member.id)]["Wallet"], users[str(member.id)]["Bank"]]
 

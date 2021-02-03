@@ -63,10 +63,29 @@ class Help(BOT.Cog):
 			inline=True)
 
 		embed.add_field(
-			name="{}bones (от 1 до 6) (ставка)".format(pref),
-			value="Вы подкините кубик, тоже на деньги",
+			name="{}bonus".format(pref),
+			value="Вы узнаете как получить бонус :)",
 			inline=True)
 
+		embed.add_field(
+			name="{}use (промокод)".format(pref),
+			value="Вы получите что-то интересное! ",
+			inline=True)
+		
+		embed.add_field(
+			name="{}listpromo".format(pref),
+			value="Посмотреть список промокодов, только для админов",
+			inline=True)
+				
+		embed.add_field(
+			name="{}del_promo (промокод)".format(pref),
+			value="Удалить промокод",
+			inline=True)
+
+		embed.add_field(
+			name="{}create_promo (промокод) (число активаций)".format(pref),
+			value="Создать промокод для с n числои активаций, если n = 0 то безограничений",
+			inline=True)
 		await ctx.send(embed=embed)
 
 
