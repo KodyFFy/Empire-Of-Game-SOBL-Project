@@ -1,13 +1,10 @@
-import asyncio
-
 import discord
 from discord.ext import commands as BOT
 
 from Imports.bin import info
-from Imports.util import GetMessage
 
 
-BLANK = 'BLANK'
+BLANK = "BLANK"
 
 pos_1 = 0
 pos_2 = 1

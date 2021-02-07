@@ -21,8 +21,13 @@ class Logger():
 
 	logger = logging.getLogger("discord")
 	logger.setLevel(logging.INFO)
-	handler = logging.FileHandler(filename="Logs/discord_currect.log", encoding="utf-8", mode="w")
-	handler.setFormatter(logging.Formatter("%(asctime)s: %(levelname)s: %(name)s: %(message)s"))
+	handler = logging.FileHandler(
+		filename="Logs/discord_currect.log",
+		encoding="utf-8",
+		mode="w")
+	handler.setFormatter(
+		logging.Formatter("%(asctime)s: %(levelname)s: %(name)s: %(message)s")
+		)
 	logger.addHandler(handler)
 
 
@@ -56,7 +61,6 @@ async def on_command_error(ctx, error):
 		await ctx.send(embed=embed)
 
 
-
 Bot.load_extension("Modules.help")
 Bot.load_extension("Modules.economy")
 Bot.load_extension("Modules.giveaway")
@@ -67,7 +71,7 @@ Bot.load_extension("Modules.bonus")
 # Bot.load_extension("Modules.tick_tack_toe")
 # Bot.load_extension("Modules.rpg")
 
-########################################################################################################
+###########################################################################
 #
 # mainshop = [{"name":"Watch","price":100,"description":"Time"},
 #            {"name":"Laptop","price":1000,"description":"Work"},
@@ -81,10 +85,12 @@ Bot.load_extension("Modules.bonus")
 #   	name = item["name"]
 #   	price = item["price"]
 #   	desc = item["description"]
-#   	em.add_field(name = name, value = f"{price} <:coin:791004475098660904> | Описание: {desc}")
+#   	em.add_field(
+# 			name=name,
+# 			value=f"{price} <:coin:791004475098660904> | Описание: {desc}")
 #   await ctx.send(embed = em)
 #
-########################################################################################################
+###########################################################################
 
 
 @Bot.event

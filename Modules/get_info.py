@@ -1,7 +1,3 @@
-import json
-import random
-import asyncio
-
 import requests as req
 from bs4 import BeautifulSoup
  
@@ -16,9 +12,9 @@ class Get_Info(BOT.Cog):
 	async def epicgames(self, ctx):
 		r = req.get("https://www.epicgames.com/store/ru/").text
 
-		soup = BeautifulSoup(r, 'lxml')
+		soup = BeautifulSoup(r, "lxml")
 
-		block = soup.find('div', {"class": "css-1x2owq5-DiscoverContainerHighlighted__root"})
+		block = soup.find("div", {"class": "css-1x2owq5-DiscoverContainerHighlighted__root"})
 		
 		#game_block = block.find("section", {"class": "css-1nzrk0w-CardGrid-styles__groupWrapper"})
 
