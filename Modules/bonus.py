@@ -61,7 +61,7 @@ class Bonus(BOT.Cog):
 					promos[promo_code][promo_code]["Options"] = {}
 					promos[promo_code][promo_code]["Options"]["Use"] = activ
 		with open("JSONs/promos.json", "w") as f:
-			json.dump(promos, f, indent=4)
+			json.dump(promos, f, indent=2)
 
 	@BOT.command()
 	@BOT.has_permissions(administrator=True)
@@ -73,7 +73,7 @@ class Bonus(BOT.Cog):
 			del promos[promo_code]
 			await ctx.send("Прмокод успешно удален!")
 			with open("JSONs/promos.json", "w") as f:
-				json.dump(promos, f, indent=4)
+				json.dump(promos, f, indent=2)
 		else:
 			await ctx.send("Такого промокода нет или вы неправильно его указали!")
 
@@ -119,7 +119,7 @@ class Bonus(BOT.Cog):
 
 						await ctx.send("Промокод успешно активирован!")
 						with open("JSONs/main.json", "w") as f:
-							json.dump(users, f, indent=4)
+							json.dump(users, f, indent=2)
 						wait_bonus.append(str(ctx.author.id))
 
 					elif aciv == 1:
@@ -135,7 +135,7 @@ class Bonus(BOT.Cog):
 						users[str(user.id)]["Bank"] += get
 						await ctx.send("Промокод успешно активирован!")
 						with open("JSONs/main.json", "w") as f:
-							json.dump(users, f, indent=4)
+							json.dump(users, f, indent=2)
 						wait_bonus.append(str(ctx.author.id))
 
 					elif aciv == -1:
@@ -156,14 +156,14 @@ class Bonus(BOT.Cog):
 						users[str(user.id)]["Bank"] += get
 						await ctx.send("Промокод успешно активирован!")
 						with open("JSONs/main.json", "w") as f:
-							json.dump(users, f, indent=4)
+							json.dump(users, f, indent=2)
 						wait_bonus.append(str(ctx.author.id))
 
 			if not promo in promos:
 				await ctx.send("Такого промокода нет :(")
 
 			with open("JSONs/promos.json", "w") as f:
-				json.dump(promos, f, indent=4)
+				json.dump(promos, f, indent=2)
 			await asyncio.sleep(24*60*60)
 			wait_beg.remove(str(ctx.author.id))
 

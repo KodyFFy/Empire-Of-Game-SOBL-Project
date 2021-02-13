@@ -155,7 +155,7 @@ class Economy(BOT.Cog):
 			wait_beg.append(str(ctx.author.id))
 
 			with open("JSONs/main.json", "w") as f:
-				json.dump(users, f, indent=4)
+				json.dump(users, f, indent=2)
 
 			await asyncio.sleep(2*60*60)
 			wait_beg.remove(str(ctx.author.id))
@@ -397,7 +397,7 @@ async def open_account(user):
 	if str(user.id) in users:
 		users[str(user.id)]["Name"] = user.name
 		with open("JSONs/main.json", "w") as f:
-			json.dump(users, f, indent=4)
+			json.dump(users, f, indent=2)
 		return False
 
 	else:
@@ -407,7 +407,7 @@ async def open_account(user):
 		users[str(user.id)]["Bank"] = 0
 
 	with open("JSONs/main.json", "w") as f:
-		json.dump(users, f, indent=4)
+		json.dump(users, f, indent=2)
 	return True
 
 
@@ -422,7 +422,7 @@ async def update_bank(user, change=0, mode="Wallet"):
 	users[str(user.id)][mode] += change
 
 	with open("JSONs/main.json", "w") as f:
-		json.dump(users, f, indent=4)
+		json.dump(users, f, indent=2)
 
 	bal = [users[str(user.id)]["Wallet"], users[str(user.id)]["Bank"]]
 	return bal

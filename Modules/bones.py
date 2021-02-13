@@ -82,7 +82,7 @@ class Bones(BOT.Cog):
 							users[str(user.id)]["Wallet"]) + int(reserv + (reserv * 3.5))
 
 						with open("JSONs/main.json", "w") as f:
-							json.dump(users, f, indent=4)
+							json.dump(users, f, indent=2)
 
 					else:
 						# name = "bone" +  "_" + str(ran) + ".gif"
@@ -95,7 +95,7 @@ class Bones(BOT.Cog):
 						users[str(user.id)]["Wallet"] = int(users[str(user.id)]["Wallet"]) - reserv
 
 						with open("JSONs/main.json", "w") as f:
-							json.dump(users, f, indent=4)
+							json.dump(users, f, indent=2)
 
 
 def setup(Bot):
