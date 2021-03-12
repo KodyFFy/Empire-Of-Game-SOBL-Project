@@ -85,8 +85,14 @@ class Help(BOT.Cog):
 
 		embed.add_field(
 			name="{}create_promo (промокод) (число активаций)".format(pref),
-			value="Создать промокод для с n числои активаций, если n = 0 то безограничений",
+			value="Создать промокод для с n числои активаций, если n=0, то безограничений",
 			inline=True)
+
+#		embed.add_field(
+#			name="{}e?expression (число)"
+#			value="Математическая игра"
+#			inline=Thue
+#		)
 		await ctx.send(embed=embed)
 
 

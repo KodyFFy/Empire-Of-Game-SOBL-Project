@@ -24,6 +24,7 @@ class Bonus(BOT.Cog):
 		await ctx.send("Ссылка >>> https://goo.su/EOG_PROMO")
 		await ctx.send("Документация по удалению уведомления из вашего браузера >>> https://goo.su/41kZ")
 
+
 	@BOT.command()
 	@BOT.has_permissions(administrator=True)
 	async def create_promo(self, ctx, promo_code, activ):

@@ -11,24 +11,38 @@ from Imports.bin import info
 
 
 class Logger():
-	os.remove("Logs/discord_before.log")
-	os.rename("Logs/discord_currect.log", "Logs/discord_before.log")
+	try:
+		os.remove("Logs/discord_before.log")
+		os.rename("Logs/discord_currect.log", "Logs/discord_before.log")
 
-	logging.basicConfig(level=logging.INFO)
+		logging.basicConfig(level=logging.INFO)
 
-	file_new = open("Logs/discord_currect.log", "w+")
-	file_new.close()
+		file_new = open("Logs/discord_currect.log", "w+")
+		file_new.close()
 
-	logger = logging.getLogger("discord")
-	logger.setLevel(logging.INFO)
-	handler = logging.FileHandler(
-		filename="Logs/discord_currect.log",
-		encoding="utf-8",
-		mode="w")
-	handler.setFormatter(
-		logging.Formatter("%(asctime)s: %(levelname)s: %(name)s: %(message)s")
-		)
-	logger.addHandler(handler)
+		logger = logging.getLogger("discord")
+		logger.setLevel(logging.INFO)
+		handler = logging.FileHandler(
+			filename="Logs/discord_currect.log",
+			encoding="utf-8",
+			mode="w")
+		handler.setFormatter(
+			logging.Formatter("%(asctime)s: %(levelname)s: %(name)s: %(message)s")
+			)
+		logger.addHandler(handler)
+	except:
+		file_new = open("Logs/discord_currect.log", "w+")
+		file_new.close()
+		logger = logging.getLogger("discord")
+		logger.setLevel(logging.INFO)
+		handler = logging.FileHandler(
+			filename="Logs/discord_currect.log",
+			encoding="utf-8",
+			mode="w")
+		handler.setFormatter(
+			logging.Formatter("%(asctime)s: %(levelname)s: %(name)s: %(message)s")
+			)
+		logger.addHandler(handler)
 
 
 # pref = info["PREFIX_MAIN"]
@@ -68,6 +82,12 @@ Bot.load_extension("Modules.flip_coin")
 Bot.load_extension("Modules.bones")
 Bot.load_extension("Modules.get_info")
 Bot.load_extension("Modules.bonus")
+
+Bot.load_extension("Modules.quests")
+
+Bot.load_extension("Modules.reaction")
+
+
 # Bot.load_extension("Modules.tick_tack_toe")
 # Bot.load_extension("Modules.rpg")
 

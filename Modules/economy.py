@@ -7,7 +7,6 @@ from discord.ext import commands as BOT
 
 from Imports.bin import info
 
-
 wait_beg = []
 wait_rob = []
 
@@ -431,7 +430,7 @@ async def update_bank(user, change=0, mode="Wallet"):
 def setup(Bot):
 	Bot.add_cog(Economy(Bot))
 
-	# @Bot.command() ### Продать предмет
+	# @Bot.command()     ### Продать предмет
 	# async def sell(ctx,item,amount = 1):
 	#	await open_account(ctx.author)
 	#
@@ -451,7 +450,7 @@ def setup(Bot):
 	#	await ctx.send(f"Ты успешно продал {amount} едениц товара {item}.")
 	#
 	#
-	# @Bot.command() ### Купить предмет
+	# @Bot.command()     ### Купить предмет
 	# async def buy(ctx,item,amount = 1):
 	#	await open_account(ctx.author)
 	#
@@ -468,7 +467,7 @@ def setup(Bot):
 	#
 	#	await ctx.send(f"Ты успешно купил {amount} едениц товара {item}")
 	#
-	# @Bot.command() ### Вывод окна рюкзака
+	# @Bot.command()     ### Вывод окна рюкзака
 	# async def bag(ctx):
 	#	await open_account(ctx.author)
 	#	user = ctx.author

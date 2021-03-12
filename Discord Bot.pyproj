@@ -1,0 +1,146 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>246206e0-6766-4fca-9eaa-a2066d76e42d</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>bot.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>Discord Bot</Name>
+    <RootNamespace>Discord Bot</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="bot.py" />
+    <Compile Include="Imports\bin.py" />
+    <Compile Include="Imports\rpg_system.py" />
+    <Compile Include="Imports\util.py" />
+    <Compile Include="Modules\bones.py" />
+    <Compile Include="Modules\bonus.py" />
+    <Compile Include="Modules\CommentedDirectory\rpg.py" />
+    <Compile Include="Modules\CommentedDirectory\tick_tack_toe.py" />
+    <Compile Include="Modules\economy.py" />
+    <Compile Include="Modules\flip_coin.py" />
+    <Compile Include="Modules\get_info.py" />
+    <Compile Include="Modules\giveaway.py" />
+    <Compile Include="Modules\help.py" />
+    <Compile Include="Modules\quests.py" />
+    <Compile Include="Modules\reaction.py" />
+    <Compile Include="Modules\tick_tack_toe.py" />
+    <Compile Include="TEMP.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+    <Folder Include="Images\Bones\" />
+    <Folder Include="Images\GIFS\" />
+    <Folder Include="Images\GIFS\Bye\" />
+    <Folder Include="Images\GIFS\Fuck_You\" />
+    <Folder Include="Images\GIFS\Hey\" />
+    <Folder Include="Images\GIFS\Hit\" />
+    <Folder Include="Images\GIFS\Play\" />
+    <Folder Include="Imports\" />
+    <Folder Include="Imports\__pycache__\" />
+    <Folder Include="JSONs\" />
+    <Folder Include="Logs\" />
+    <Folder Include="Modules\" />
+    <Folder Include="Modules\CommentedDirectory\" />
+    <Folder Include="Modules\__pycache__\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include="Images\Bones\bone_1.gif" />
+    <Content Include="Images\Bones\bone_2.gif" />
+    <Content Include="Images\Bones\bone_3.gif" />
+    <Content Include="Images\Bones\bone_4.gif" />
+    <Content Include="Images\Bones\bone_5.gif" />
+    <Content Include="Images\Bones\bone_6.gif" />
+    <Content Include="Images\Bones\bone_start.gif" />
+    <Content Include="Images\GIFS\Bye\1.gif" />
+    <Content Include="Images\GIFS\Bye\2.gif" />
+    <Content Include="Images\GIFS\Bye\3.gif" />
+    <Content Include="Images\GIFS\Bye\4.gif" />
+    <Content Include="Images\GIFS\Bye\5.gif" />
+    <Content Include="Images\GIFS\Fuck_You\1.gif" />
+    <Content Include="Images\GIFS\Fuck_You\10.gif" />
+    <Content Include="Images\GIFS\Fuck_You\11.gif" />
+    <Content Include="Images\GIFS\Fuck_You\12.gif" />
+    <Content Include="Images\GIFS\Fuck_You\13.gif" />
+    <Content Include="Images\GIFS\Fuck_You\14.gif" />
+    <Content Include="Images\GIFS\Fuck_You\15.gif" />
+    <Content Include="Images\GIFS\Fuck_You\16.gif" />
+    <Content Include="Images\GIFS\Fuck_You\2.gif" />
+    <Content Include="Images\GIFS\Fuck_You\3.gif" />
+    <Content Include="Images\GIFS\Fuck_You\4.gif" />
+    <Content Include="Images\GIFS\Fuck_You\5.gif" />
+    <Content Include="Images\GIFS\Fuck_You\6.gif" />
+    <Content Include="Images\GIFS\Fuck_You\7.gif" />
+    <Content Include="Images\GIFS\Fuck_You\8.gif" />
+    <Content Include="Images\GIFS\Fuck_You\9.gif" />
+    <Content Include="Images\GIFS\Hey\1.gif" />
+    <Content Include="Images\GIFS\Hey\10.gif" />
+    <Content Include="Images\GIFS\Hey\11.gif" />
+    <Content Include="Images\GIFS\Hey\2.gif" />
+    <Content Include="Images\GIFS\Hey\3.gif" />
+    <Content Include="Images\GIFS\Hey\4.gif" />
+    <Content Include="Images\GIFS\Hey\5.gif" />
+    <Content Include="Images\GIFS\Hey\6.gif" />
+    <Content Include="Images\GIFS\Hey\7.gif" />
+    <Content Include="Images\GIFS\Hey\8.gif" />
+    <Content Include="Images\GIFS\Hey\9.gif" />
+    <Content Include="Images\GIFS\Hit\1.gif" />
+    <Content Include="Images\GIFS\Hit\10.gif" />
+    <Content Include="Images\GIFS\Hit\11.gif" />
+    <Content Include="Images\GIFS\Hit\12.gif" />
+    <Content Include="Images\GIFS\Hit\13.gif" />
+    <Content Include="Images\GIFS\Hit\14.gif" />
+    <Content Include="Images\GIFS\Hit\15.gif" />
+    <Content Include="Images\GIFS\Hit\2.gif" />
+    <Content Include="Images\GIFS\Hit\3.gif" />
+    <Content Include="Images\GIFS\Hit\4.gif" />
+    <Content Include="Images\GIFS\Hit\5.gif" />
+    <Content Include="Images\GIFS\Hit\6.gif" />
+    <Content Include="Images\GIFS\Hit\7.gif" />
+    <Content Include="Images\GIFS\Hit\8.gif" />
+    <Content Include="Images\GIFS\Hit\9.gif" />
+    <Content Include="Images\GIFS\Play\1.gif" />
+    <Content Include="Images\GIFS\Play\2.gif" />
+    <Content Include="Images\GIFS\Play\3.gif" />
+    <Content Include="Imports\__pycache__\bin.cpython-37.pyc" />
+    <Content Include="Imports\__pycache__\util.cpython-37.pyc" />
+    <Content Include="JSONs\main.json" />
+    <Content Include="JSONs\promos.json" />
+    <Content Include="JSONs\rpg.json" />
+    <Content Include="Modules\__pycache__\bones.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\bonus.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\economy.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\flip_coin.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\get_info.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\giveaway.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\help.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\quests.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\reaction.cpython-37.pyc" />
+    <Content Include="Modules\__pycache__\tick_tack_toe.cpython-37.pyc" />
+    <Content Include="requirements.txt" />
+    <Content Include="start.cmd" />
+    <Content Include="start.sh" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
