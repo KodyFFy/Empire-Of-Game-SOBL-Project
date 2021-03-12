@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Python: Bot file",
+				"type": "python",
+				"request": "launch",
+				"cwd": "${workspaceFolder}",
+				"program": "bot.py",
+				"console": "integratedTerminal"
+			}
+		]
+	}
+}
