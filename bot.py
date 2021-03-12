@@ -30,7 +30,7 @@ class Logger():
 			logging.Formatter("%(asctime)s: %(levelname)s: %(name)s: %(message)s")
 			)
 		logger.addHandler(handler)
-	except:
+	except FileNotFoundError:
 		file_new = open("Logs/discord_currect.log", "w+")
 		file_new.close()
 		logger = logging.getLogger("discord")
@@ -82,9 +82,7 @@ Bot.load_extension("Modules.flip_coin")
 Bot.load_extension("Modules.bones")
 Bot.load_extension("Modules.get_info")
 Bot.load_extension("Modules.bonus")
-
 Bot.load_extension("Modules.quests")
-
 Bot.load_extension("Modules.reaction")
 
 
@@ -98,7 +96,7 @@ Bot.load_extension("Modules.reaction")
 #            {"name":"PC","price":10000,"description":"Gaming"}]
 #
 #
-# @Bot.command() ### Вывыод окна магазина 
+# @Bot.command() ### Вывыод окна магазина
 # async def shop(ctx):
 #    em = discord.Embed(title = "Магазин")
 #   for item in mainshop:
