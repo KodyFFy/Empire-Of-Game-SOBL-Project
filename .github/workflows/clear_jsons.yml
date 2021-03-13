@@ -1,0 +1,11 @@
+name: Clear JSONs files
+on:
+	push
+
+jobs:
+	clear_jsons:
+		name: Clear JSONs files
+		runs-on: ubuntu-lastest
+		
+		steps:
+		run: echo "" > JSONs/main.json && echo "" > JSONs/rpg.json
