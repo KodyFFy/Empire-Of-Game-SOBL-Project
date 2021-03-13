@@ -1,6 +1,35 @@
-JSONs/*
-Logs/*
+# Byte-compiled / optimized files
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Environments
+.env
+.venv
 env/
-.vscode/
-.vs/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Bot logs and JSONs
+Logs/*
+JOSNs/*
+
+### Code editors
+# Visual Studio & VSCode directories
+.vscode
+.vs
+
+# Files of Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
