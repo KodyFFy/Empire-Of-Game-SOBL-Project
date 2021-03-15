@@ -1,6 +1,5 @@
 name: Clear JSONs files
-on:
-	push:
+on: [push]
 		branches:
 		main
 
