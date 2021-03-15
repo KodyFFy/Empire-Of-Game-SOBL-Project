@@ -21,7 +21,7 @@ venv.bak/
 
 # Bot logs and JSONs
 Logs/*
-JOSNs/*
+JSONs/*
 
 ### Code editors
 # Visual Studio & VSCode directories
