@@ -5,7 +5,7 @@ import asyncio
 import discord
 from discord.ext import commands as BOT
 
-from Imports.bin import info
+from config import info
 import Modules.economy as econom
 
 
@@ -26,7 +26,9 @@ class Bones(BOT.Cog):
 		if num > 6 or num == "" or num < 1:
 			embed=discord.Embed(
 				title="Ошибка!",
-				description="Ошибка аргумента числа. Возможно вы ввели: отрицательное число / ничего / число больше 6 / число меньше 1 / текст",
+				description="Ошибка аргумента числа. Возможно вы ввели: "
+							"отрицательное число / ничего / число больше 6 / "
+							"число меньше 1 / текст",
 				color=0xef3417)
 			await ctx.send(embed=embed)
 
@@ -36,19 +38,23 @@ class Bones(BOT.Cog):
 				num = int(num)
 				if num == ran:
 					# name = "bone" +  "_" + str(ran) + ".gif"
-					# await ctx.send(file=discord.File(f"Images/Bones/{name}"))
+					# await ctx.send(
+					# 	file=discord.File(f"Images/Bones/{name}"))
 					embed=discord.Embed(
 						title="Вы выиграли!",
-						description=f"Кубик 🎲 упал и на нем число {ran}. Вы угадали поздравляю!",
+						description=f"Кубик 🎲 упал и на нем число {ran}. "
+									 "Вы угадали поздравляю!",
 						color=0x7289da)
 					await ctx.send(embed=embed)
 
 				else:
 					# name = "bone" +  "_" + str(ran) + ".gif"
-					# await ctx.send(file=discord.File(f"Images/Bones/{name}"))
+					# await ctx.send(
+					# 	file=discord.File(f"Images/Bones/{name}"))
 					embed=discord.Embed(
 						title="Вы проиграли!",
-						description=f"Кубик 🎲 упал и на нем число {ran}. Увы вы не угадали :(")
+						description=f"Кубик 🎲 упал и на нем число {ran}. "
+									 "Увы вы не угадали :(")
 					await ctx.send(embed=embed)
 
 			else:
@@ -72,27 +78,35 @@ class Bones(BOT.Cog):
 
 					if num == ran:
 						# name = "bone" +  "_" + str(ran) + ".gif"
-						# await ctx.send(file=discord.File(f"Images/Bones/{name}"))
+						# await ctx.send(
+						# 	file=discord.File(f"Images/Bones/{name}"))
 						embed=discord.Embed(title="Вы выиграли!",
-							description=f"Кубик 🎲 упал и на нем число {ran}. Вы угадали поздравляю! Ваш куш - {reserv + (reserv * 3.5)} <:coin:791004475098660904> ",
+							description=f"Кубик 🎲 упал и на нем число {ran}. "
+										 "Вы угадали поздравляю! "
+										f"Ваш куш - {reserv + (reserv * 3.5)} "
+										 "<:coin:791004475098660904>",
 							color=0x7289da)
 						await ctx.send(embed=embed)
 
 						users[str(user.id)]["Wallet"] = int(
-							users[str(user.id)]["Wallet"]) + int(reserv + (reserv * 3.5))
+							users[str(user.id)]["Wallet"]) + int(
+								reserv + (reserv * 3.5))
 
 						with open("JSONs/main.json", "w") as f:
 							json.dump(users, f, indent=2)
 
 					else:
 						# name = "bone" +  "_" + str(ran) + ".gif"
-						# await ctx.send(file=discord.File(f"Images/Bones/{name}"))
+						# await ctx.send(
+						# 	file=discord.File(f"Images/Bones/{name}"))
 						embed=discord.Embed(
 							title="Вы проиграли!",
-							description=f"Кубик 🎲 упал и на нем число {ran}. Увы вы не угадали :(")
+							description=f"Кубик 🎲 упал и на нем число {ran}. "
+										 "Увы вы не угадали :(")
 						await ctx.send(embed=embed)
 
-						users[str(user.id)]["Wallet"] = int(users[str(user.id)]["Wallet"]) - reserv
+						users[str(user.id)]["Wallet"] = int(
+							users[str(user.id)]["Wallet"]) - reserv
 
 						with open("JSONs/main.json", "w") as f:
 							json.dump(users, f, indent=2)

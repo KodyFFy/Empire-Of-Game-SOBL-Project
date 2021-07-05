@@ -4,7 +4,7 @@ import random
 import discord
 from discord.ext import commands as BOT
 
-from Imports.bin import info
+from config import info
 import Modules.economy as econom
 
 

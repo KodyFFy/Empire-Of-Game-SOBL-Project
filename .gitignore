@@ -11,8 +11,8 @@ profile_default/
 ipython_config.py
 
 # Environments
-.env
-.venv
+.env/
+.venv/
 env/
 venv/
 ENV/
@@ -20,13 +20,13 @@ env.bak/
 venv.bak/
 
 # Bot logs and JSONs
-Logs/*
-JSONs/*
+Logs/
+JSONs/
 
 ### Code editors
 # Visual Studio & VSCode directories
-.vscode
-.vs
+.vscode/
+.vs/
 
 # Files of Sublime Text
 *.tmlanguage.cache

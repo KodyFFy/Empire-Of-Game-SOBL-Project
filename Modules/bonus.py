@@ -1,14 +1,15 @@
+import asyncio
 import json
 import random
-import asyncio
 
 import discord
+
 from discord.ext import commands as BOT
 
+from bot import ArgParser
 from Imports.bin import info
 import Modules.economy as econom
 
-pref = info["PREFIX_MAIN"]
 
 wait_bonus = []
 
@@ -19,10 +20,13 @@ class Bonus(BOT.Cog):
 
 	@BOT.command()
 	async def bonus(self, ctx):
-		await ctx.send(f"Для получения бонуса перейдите по ссылке и разрешите уведомление! Потом пропишите {pref}use (код)")
-		await ctx.send("Нажимая разрешить уведомления при переходе, вы помогаете серверу")
-		await ctx.send("Ссылка >>> https://goo.su/EOG_PROMO")
-		await ctx.send("Документация по удалению уведомления из вашего браузера >>> https://goo.su/41kZ")
+		await ctx.send("Для получения бонуса перейдите по ссылке и разрешите "
+					  f"уведомление! Потом пропишите {ArgParser.pref}use "
+					   "(**ваш код**)\nНажимая разрешить уведомления "
+					   "при переходе, вы помогаете серверу\n"
+					   "Ссылка >>> https://goo.su/EOG_PROMO\n"
+					   "Документация по удалению уведомления из вашего "
+					   "браузера >>> https://goo.su/41kZ\n")
 
 
 	@BOT.command()
@@ -32,12 +36,17 @@ class Bonus(BOT.Cog):
 			promos = json.load(f)
 
 		if str(promo_code) in promos:
-			await ctx.send(f"Такой промокод уже есть, чтобы изменить его удалите его и снова создайте. Вы можете узнать о промокодах и инфу о них с помощью {pref}listpromo")
+			await ctx.send(f"Такой промокод уже есть, чтобы изменить его "
+							"удалите его и снова создайте. Вы можете "
+							"узнать о промокодах и инфу о них "
+						   f"с помощью {ArgParser.pref}listpromo")
 
 		else:
 			if int(activ) == 0:
-				await ctx.send("Промокод с бесконечным количеством использования, успешно создан!")
+				await ctx.send("Промокод с бесконечным количеством "
+							   "использования, успешно создан!")
 				promo_code = str(promo_code)
+
 				with open("JSONs/promos.json", "r") as f:
 					promos = json.load(f)
 
@@ -48,10 +57,12 @@ class Bonus(BOT.Cog):
 					promos[promo_code][promo_code]["Options"]["Use"] = activ
 
 			elif int(activ) < 0:
-				await ctx.send("Количество активаций должно быть неотрицательным **числом**")
+				await ctx.send("Количество активаций должно быть "
+							   "неотрицательным **числом**")
 
 			else:
-				await ctx.send(f"Промокод c {activ} использованиями, успешно создан!")
+				await ctx.send(f"Промокод c {activ} использованиями, "
+								"успешно создан!")
 				promo_code = str(promo_code)
 				with open("JSONs/promos.json", "r") as f:
 					promos = json.load(f)
@@ -76,7 +87,8 @@ class Bonus(BOT.Cog):
 			with open("JSONs/promos.json", "w") as f:
 				json.dump(promos, f, indent=2)
 		else:
-			await ctx.send("Такого промокода нет или вы неправильно его указали!")
+			await ctx.send("Такого промокода нет "
+						   "или вы неправильно его указали!")
 
 	@BOT.command()
 	@BOT.has_permissions(administrator=True)
@@ -93,10 +105,11 @@ class Bonus(BOT.Cog):
 
 			activ = promos[i][i]["Options"]["Use"]
 			embed.add_field(
-				name=f"Промокод ---> {i}",
-				value=f"Количество использований ---> {activ}, Если количество использований 0, то неограниченно",
+				name=f"Промокод ==> {i}",
+				value=f"Количество использований ==> {activ}, "
+					   "Если количество использований 0, то неограниченно",
 				inline=False)
-		await ctx.send("Инфа о промокодах", embed=embed)
+		await ctx.send("Информация о промокодах", embed=embed)
 
 	@BOT.command()
 	async def use(self, ctx, promo):

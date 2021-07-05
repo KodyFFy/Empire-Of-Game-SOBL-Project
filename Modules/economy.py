@@ -1,11 +1,10 @@
+import asyncio
 import json
 import random
-import asyncio
 
 import discord
+from config import info
 from discord.ext import commands as BOT
-
-from Imports.bin import info
 
 wait_beg = []
 wait_rob = []
@@ -26,7 +25,8 @@ class Economy(BOT.Cog):
 			wallet_amt = int(users[str(user.id)]["Wallet"])
 			bank_amt = int(users[str(user.id)]["Bank"])
 
-			await ctx.send(f"Информация о балансе, для игрока {ctx.author.mention}")
+			await ctx.send("Информация о балансе, для игрока "
+						   "{0}".format())
 			embed = discord.Embed(
 				title=f"Баланс пользователя {ctx.author}",
 				color=0x7289da)
@@ -59,7 +59,7 @@ class Economy(BOT.Cog):
 			embed.add_field(
 				name="Баланс ",
 				value=f"{wallet_amt} <:coin:791004475098660904>")
-			
+
 			embed.add_field(
 				name="Банк",
 				value=f"{bank_amt} <:coin:791004475098660904>")
@@ -90,7 +90,9 @@ class Economy(BOT.Cog):
 				await update_bank(member, -1*int(amount), str(var))
 				embed = discord.Embed(
 					title="Готово!",
-					description=f"Админы забрали из банка {amount} <:coin:791004475098660904> у игрока {member.mention}",
+					description=f"Админы забрали из банка {amount} "
+								 "<:coin:791004475098660904> у игрока "
+								f"{member.mention}",
 					color=0x7289da)
 				await ctx.send(embed=embed)
 
@@ -103,7 +105,9 @@ class Economy(BOT.Cog):
 				await update_bank(member, -1*int(amount), str(var))
 			embed = discord.Embed(
 				title="Готово!",
-				description=f"Админы забрали из кошелька {amount} <:coin:791004475098660904> у игрока {member.mention}",
+				description=f"Админы забрали из кошелька {amount} "
+							 "<:coin:791004475098660904> у игрока "
+							f"{member.mention}",
 				color=0x7289da)
 			await ctx.send(embed=embed)
 
@@ -341,7 +345,7 @@ class Economy(BOT.Cog):
 
 		if ctx.author.mention == member.mention:
 			embed = discord.Embed(
-				title="Ошибка!", 
+				title="Ошибка!",
 				description="Вы не можете обокрасть самого себя!",
 				color=0xef3417)
 			await ctx.send(embed=embed)
@@ -350,7 +354,7 @@ class Economy(BOT.Cog):
 		if not str(ctx.author.id) in wait_rob:
 			if bal[0] < 100:
 				embed = discord.Embed(
-					title="nope", 
+					title="nope",
 					description="Это действие того не стоит!",
 					color=0x7289da)
 				await ctx.send(embed=embed)
