@@ -108,7 +108,7 @@ class Voice(BOT.Cog):
 
     @BOT.command()
     async def voiceHelp(self, ctx):
-        embed = discord.Embed(title="Help", description="", color=0x7289da)
+        embed = discord.Embed(title="Help", description="", color=discord.Color.blurple())
         embed.set_author(name=f"{ctx.guild.me.display_name}",
                          url="https://discordbots.org/bot/472911936951156740",
                          icon_url=f"{ctx.guild.me.avatar_url}")
@@ -225,7 +225,7 @@ class Voice(BOT.Cog):
         conn.close()
 
     @setup.error
-    async def info_error(self, ctx, error):
+    async def botInfo_error(self, ctx, error):
         print(error)
 
     @BOT.command()

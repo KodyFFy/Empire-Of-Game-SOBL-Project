@@ -5,7 +5,7 @@ import random
 import discord
 from discord.ext import commands as BOT
 
-import Modules.economy as econom
+import Modules.economy as economy
 
 
 class Quests(BOT.Cog):
@@ -15,14 +15,14 @@ class Quests(BOT.Cog):
     @BOT.command()
     async def expression(self, ctx, money):
         user = ctx.author
-        await econom.open_account(user)
+        await economy.open_account(user)
         kof = 0
-        users = await econom.get_main_data()
+        users = await economy.get_main_data()
         balance = int(users[str(user.id)]["Wallet"])
         new_money = money
         users[str(user.id)]["Wallet"] -= int(money)
         with open("JSONs/main.json", "w") as f:
-            json.dump(users, f, indent=2)
+            json.dump(users, f, indent=4)
 
         if int(money) > int(balance):
             await ctx.send("У вас нет столько "
@@ -60,7 +60,7 @@ class Quests(BOT.Cog):
                 title="||@here||. Для начала игры напишите **start** в чат. "
                       "Если вы передумали, напишите **stop**. "
                       "Если не будет ответа канал удалится черещ 2 минуты",
-                color=0x7289da
+                color=discord.Color.blurple()
             )
             await channel.send(embed=embed)
 
@@ -76,14 +76,14 @@ class Quests(BOT.Cog):
                 users[str(user.id)]["Wallet"] += int(money)
 
                 with open("JSONs/main.json", "w") as f:
-                    json.dump(users, f, indent=2)
+                    json.dump(users, f, indent=4)
 
             else:
                 if user_answ.content == "start":
                     embed = discord.Embed(
                         title="Начинаем!",
                         description="",
-                        color=0x7289da
+                        color=discord.Color.blurple()
                     )
                     await channel.send(embed=embed)
 
@@ -164,7 +164,7 @@ class Quests(BOT.Cog):
                     users[str(user.id)]["Wallet"] += int(ger)
 
                     with open("JSONs/main.json", "w") as f:
-                        json.dump(users, f, indent=2)
+                        json.dump(users, f, indent=4)
 
                     await channel.send(
                         "Проверьте свой баланс, если что-то не так, "
@@ -182,7 +182,7 @@ class Quests(BOT.Cog):
                     users[str(user.id)]["Wallet"] += int(money)
 
                     with open("JSONs/main.json", "w") as f:
-                        json.dump(users, f, indent=2)
+                        json.dump(users, f, indent=4)
 
                     await asyncio.sleep(5)
                     await channel.delete()
@@ -196,7 +196,7 @@ class Quests(BOT.Cog):
                     users[str(user.id)]["Wallet"] += int(money)
 
                     with open("JSONs/main.json", "w") as f:
-                        json.dump(users, f, indent=2)
+                        json.dump(users, f, indent=4)
 
                     await asyncio.sleep(5)
                     await channel.delete()

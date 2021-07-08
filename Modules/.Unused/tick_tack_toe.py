@@ -4,7 +4,7 @@ import json
 import discord
 from discord.ext import commands as BOT
 
-from config import info
+from config import botInfo
 from Imports.util import GetMessage
 
 

@@ -3,7 +3,6 @@ import json
 import random
 
 import discord
-from config import info
 from discord.ext import commands as BOT
 
 wait_beg = []
@@ -14,8 +13,8 @@ class Economy(BOT.Cog):
     def __init__(self, Bot):
         self.Bot = Bot
 
-    @BOT.command(aliases=["cash", "balance"])  # Баланс игрока
-    async def __balance(self, ctx, member: discord.Member = None):
+    @BOT.command(aliases=["cash"])               # Баланс игрока
+    async def balance(self, ctx, member: discord.Member = None):
         if member is None:
             await open_account(ctx.author)
 
@@ -25,20 +24,19 @@ class Economy(BOT.Cog):
             wallet_amt = int(users[str(user.id)]["Wallet"])
             bank_amt = int(users[str(user.id)]["Bank"])
 
-            await ctx.send("Информация о балансе, для игрока "
-                           "{0}".format())
             embed = discord.Embed(
                 title=f"Баланс пользователя {ctx.author}",
-                color=0x7289da)
+                color=discord.Color.blurple()
+            )
 
             embed.add_field(
                 name="Баланс",
-                value=f"{wallet_amt} <:coin:791004475098660904>")
+                value=f"{wallet_amt} <:coin:791004475098660904>"
+            )
 
             embed.add_field(
-                name="Банк",
-                value=f"{bank_amt} <:coin:791004475098660904>")
-
+                name="Банк", value=f"{bank_amt} <:coin:791004475098660904>"
+            )
             await ctx.send(embed=embed)
 
         else:
@@ -54,22 +52,22 @@ class Economy(BOT.Cog):
 
             embed = discord.Embed(
                 title=f"Баланс пользователя {member.name}",
-                color=0x7289da)
+                color=discord.Color.blurple()
+            )
 
             embed.add_field(
-                name="Баланс ",
-                value=f"{wallet_amt} <:coin:791004475098660904>")
+                name="Баланс",
+                value=f"{wallet_amt} <:coin:791004475098660904>"
+            )
 
             embed.add_field(
-                name="Банк",
-                value=f"{bank_amt} <:coin:791004475098660904>")
-
+                name="Банк", value=f"{bank_amt} <:coin:791004475098660904>"
+            )
             await ctx.send(embed=embed)
 
     @BOT.command()
     @BOT.has_permissions(administrator=True)
     async def take(self, ctx, member: discord.Member, amount, var="Wallet"):
-
         await open_account(member)
 
         users = await get_main_data()
@@ -84,62 +82,67 @@ class Economy(BOT.Cog):
         if str(var) == "Bank" or str(var) == "bank":
             if new_Bankamt < 0:
                 Bank_amt = int(users[str(user.id)]["Bank"])
-                await update_bank(member, -1*int(Bank_amt), str(var))
+                await update_bank(member, -1 * int(Bank_amt), str(var))
 
             else:
-                await update_bank(member, -1*int(amount), str(var))
+                await update_bank(member, -1 * int(amount), str(var))
                 embed = discord.Embed(
                     title="Готово!",
                     description=f"Админы забрали из банка {amount} "
                                  "<:coin:791004475098660904> у игрока "
                                 f"{member.mention}",
-                    color=0x7289da)
+                    color=discord.Color.blurple()
+                )
                 await ctx.send(embed=embed)
 
         elif str(var) == "Wallet" or str(var) == "wallet":
             if new_Walletamt < 0:
                 Wallet_amt = wallet_amt = int(users[str(user.id)]["Wallet"])
-                await update_bank(member, -1*int(Wallet_amt), str(var))
+                await update_bank(member, -1 * int(Wallet_amt), str(var))
 
             else:
-                await update_bank(member, -1*int(amount), str(var))
+                await update_bank(member, -1 * int(amount), str(var))
             embed = discord.Embed(
                 title="Готово!",
                 description=f"Админы забрали из кошелька {amount} "
                              "<:coin:791004475098660904> у игрока "
                             f"{member.mention}",
-                color=0x7289da)
+                color=discord.Color.blurple()
+            )
             await ctx.send(embed=embed)
 
         if var is None:
             if new_Walletamt < 0:
                 Wallet_amt = wallet_amt = int(users[str(user.id)]["Wallet"])
-                await update_bank(member, -1*int(Wallet_amt), str(var))
+                await update_bank(member, -1 * int(Wallet_amt), str(var))
 
             else:
-                await update_bank(member, -1*int(amount), str(var))
+                await update_bank(member, -1 * int(amount), str(var))
             embed = discord.Embed(
                 title="Готово!",
-                description=f"Админы забрали из кошелька {amount} <:coin:791004475098660904> у игрока {member.mention}",
-                color=0x7289da)
+                description=f"Админы забрали из кошелька {amount} "
+                            "<:coin:791004475098660904> у игрока "
+                           f"{member.mention}",
+                color=discord.Color.blurple()
+            )
             await ctx.send(embed=embed)
 
     @BOT.command()
     @BOT.has_permissions(administrator=True)
     async def give(self, ctx, member: discord.Member, amount):
         await open_account(member)
-        users = await get_main_data()
-        user = ctx.author
+        await update_bank(member, 1 * int(amount), "Bank")
 
-        await update_bank(member, 1*int(amount), "Bank")
         embed = discord.Embed(
             title="Готово!",
-            description=f"Админы дали игроку {member.mention} {amount} <:coin:791004475098660904>",
-            color=0x7289da)
+            description=f"Админы дали игроку {member.mention} {amount} "
+                         "<:coin:791004475098660904>",
+            color=discord.Color.blurple()
+        )
         await ctx.send(embed=embed)
 
-    @BOT.command(aliases=["beg", "work"])  # Работа
-    async def __beg(self, ctx):
+    @BOT.command(aliases=["work"])          # Работа
+    async def beg(self, ctx):
         await open_account(ctx.author)
 
         users = await get_main_data()
@@ -150,34 +153,39 @@ class Economy(BOT.Cog):
         if not str(ctx.author.id) in wait_beg:
             embed = discord.Embed(
                 title="Баланс пользователя",
-                description=f"Пользователь {ctx.author.mention} получил {earn} <:coin:791004475098660904>!",
-                color=0x7289da)
+                description=f"Пользователь {ctx.author.mention} получил "
+                            f"{earn} <:coin:791004475098660904>!",
+                color=discord.Color.blurple()
+            )
             await ctx.send(embed=embed)
 
             users[str(user.id)]["Wallet"] += earn
             wait_beg.append(str(ctx.author.id))
 
             with open("JSONs/main.json", "w") as f:
-                json.dump(users, f, indent=2)
+                json.dump(users, f, indent=4)
 
-            await asyncio.sleep(2*60*60)
+            await asyncio.sleep(2 * 60 * 60)
             wait_beg.remove(str(ctx.author.id))
 
         else:
             embed = discord.Embed(
                 title="Ошибка!",
-                description=f"**{ctx.author.mention}** вы уже использовали эту команду. Команда работает раз в 2 часа.",
-                color=0xef3417)
+                description=f"**{ctx.author.mention}** вы уже использовали "
+                             "эту команду. Команда работает раз в 2 часа.",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
 
-    @BOT.command(aliases=["withdraw", "decision"])  # Снять деньги с банка
-    async def __withdraw(self, ctx, amount=None):
+    @BOT.command(aliases=["decision"])               # Снять деньги с банка
+    async def withdraw(self, ctx, amount=None):
         await open_account(ctx.author)
         if amount == None:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="Введите значение для вывода",
-                color=0xef3417)
+                description="Введите значение для вывода!",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
@@ -187,33 +195,43 @@ class Economy(BOT.Cog):
         if amount > bal[1]:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="У Вас нет столько <:coin:791004475098660904> на счете **;~;**",
-                color=0xef3417)
+                description="У Вас нет столько <:coin:791004475098660904> "
+                            "на счете **;~;**",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
         if amount < 0:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="Сумма <:coin:791004475098660904> должна быть положительной!",
-                color=0xef3417)
+                description="Сумма <:coin:791004475098660904> "
+                            "должна быть положительной!",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
         await update_bank(ctx.author, amount)
-        await update_bank(ctx.author, -1*amount, "Bank")
-        embed = discord.Embed(title="Готово!", description=f"Вы успешно сняли {amount} <:coin:791004475098660904>",
-                              color=0x7289da)
+        await update_bank(ctx.author, -1 * amount, "Bank")
+        embed = discord.Embed(
+            title="Готово!",
+            description=f"Вы успешно сняли {amount} "
+                         "<:coin:791004475098660904>",
+            color=discord.Color.blurple()
+        )
         await ctx.send(embed=embed)
 
-    @BOT.command(aliases=["deposit", "put"])  # Сделать депозит в банке
-    async def __deposit(self, ctx, amount=None):
+    @BOT.command(aliases=["put"])               # Сделать депозит в банке
+    async def deposit(self, ctx, amount=None):
         await open_account(ctx.author)
         if amount == None:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="Введите значение для вывода <:coin:791004475098660904>",
-                color=0xef3417)
+                description="Введите значение для вывода "
+                            "<:coin:791004475098660904>",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
@@ -223,28 +241,34 @@ class Economy(BOT.Cog):
         if amount > bal[0]:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="У Вас нет столько <:coin:791004475098660904> на счете **;~;**",
-                color=0xef3417)
+                description="У Вас нет столько <:coin:791004475098660904> "
+                            "на счете **;~;**",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
         if amount < 0:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="Сумма <:coin:791004475098660904> должна быть положительной!",
-                color=0xef3417)
+                description="Сумма <:coin:791004475098660904> "
+                            "должна быть положительной!",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
-        await update_bank(ctx.author, -1*amount)
+        await update_bank(ctx.author, -1 * amount)
         await update_bank(ctx.author, amount, "Bank")
         embed = discord.Embed(
             title="Готово!",
-            description=f"Вы успешно положили на счет {amount} <:coin:791004475098660904>",
-            color=0x7289da)
+            description=f"Вы успешно положили на счет {amount} "
+                         "<:coin:791004475098660904>",
+            color=discord.Color.blurple()
+        )
         await ctx.send(embed=embed)
 
-    @BOT.command()  # Отправить деньги
+    @BOT.command()               # Отправить деньги
     async def send(self, ctx, member: discord.Member, amount=None):
         await open_account(ctx.author)
         await open_account(member)
@@ -252,7 +276,8 @@ class Economy(BOT.Cog):
             embed = discord.Embed(
                 title="Ошибка!",
                 description="Введите значение для вывода",
-                color=0xef3417)
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
@@ -262,35 +287,42 @@ class Economy(BOT.Cog):
         if amount > bal[1]:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="У Вас нет столько <:coin:791004475098660904> на счете **;~;**",
-                color=0xef3417)
+                description="У Вас нет столько <:coin:791004475098660904> "
+                            "на счете **;~;**",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
         if amount < 0:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="Сумма <:coin:791004475098660904> должна быть положительной!",
-                color=0xef3417)
+                description="Сумма <:coin:791004475098660904> "
+                            "должна быть положительной!",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
-        await update_bank(ctx.author, -1*amount, "Bank")
+        await update_bank(ctx.author, -1 * amount, "Bank")
         await update_bank(member, amount, "Bank")
         embed = discord.Embed(
             title="Готово!",
-            description=f"Вы успешно перевели пользователю {member.mention} на счет {amount} <:coin:791004475098660904>",
-            color=0x7289da)
+            description=f"Вы успешно перевели пользователю {member.mention} "
+                        f"на счет {amount} <:coin:791004475098660904>",
+            color=discord.Color.blurple()
+        )
         await ctx.send(embed=embed)
 
-    @BOT.command()  # Слоты 3*
+    @BOT.command()               # Слоты 3*
     async def slots(self, ctx, amount=None):
         await open_account(ctx.author)
         if amount == None:
             embed = discord.Embed(
                 title="Ошибка!",
                 description="Введите значение ставки!",
-                color=0xef3417)
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
@@ -299,16 +331,20 @@ class Economy(BOT.Cog):
         if amount > bal[0]:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="У Вас нет столько <:coin:791004475098660904> на счете **;~;**",
-                color=0xef3417)
+                description="У Вас нет столько <:coin:791004475098660904> "
+                            "на счете **;~;**",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
         if amount < 0:
             embed = discord.Embed(
                 title="Ошибка!",
-                description="Сумма <:coin:791004475098660904> должна быть положительной!",
-                color=0xef3417)
+                description="Сумма <:coin:791004475098660904> "
+                            "должна быть положительной!",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
@@ -317,80 +353,95 @@ class Economy(BOT.Cog):
             a = random.choice(["💰", "💡", "🔋"])
             final.append(a)
         l = " ".join(final)
-        await ctx.send("["+str(l)+"]")
+        await ctx.send("[" + str(l) + "]")
 
         if final[0] == final[1] == final[2]:
             al = amount * 3
             embed = discord.Embed(
                 title="**Wow!**",
-                description=f"Вы выиграли **ДЖЕКПОТ!** Ты получил {al} <:coin:791004475098660904>",
-                color=0x7289da)
+                description=f"Вы выиграли **ДЖЕКПОТ!** Ты получил {al} "
+                             "<:coin:791004475098660904>",
+                color=discord.Color.blurple()
+            )
             await ctx.send(embed=embed)
-            await update_bank(ctx.author, 3*amount)
+            await update_bank(ctx.author, 3 * amount)
 
         else:
-            await update_bank(ctx.author, -1*amount)
+            await update_bank(ctx.author, -1 * amount)
             embed = discord.Embed(
                 title="Вы проиграли!",
-                description="Вы проиграли свою ставку! В следующий раз ты точно выиграешь!",
-                color=0x7289da)
+                description="Вы проиграли свою ставку! "
+                            "В следующий раз Вы точно выиграете!",
+                color=discord.Color.blurple()
+            )
             await ctx.send(embed=embed)
 
-    @BOT.command()  # Ограбить
+    @BOT.command()               # Ограбить
     async def rob(self, ctx, member: discord.Member):
         await open_account(ctx.author)
         await open_account(member)
 
-        bal = await update_bank(member)
+        balance = await update_bank(member)
 
         if ctx.author.mention == member.mention:
             embed = discord.Embed(
                 title="Ошибка!",
                 description="Вы не можете обокрасть самого себя!",
-                color=0xef3417)
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
             return
 
         if not str(ctx.author.id) in wait_rob:
-            if bal[0] < 100:
+            if balance[0] < 100:
                 embed = discord.Embed(
                     title="nope",
                     description="Это действие того не стоит!",
-                    color=0x7289da)
+                    color=discord.Color.blurple()
+                )
                 await ctx.send(embed=embed)
                 return
 
-            earning = int(random.randrange(0, bal[0]//4))
+            earning = int(random.randrange(0, balance[0] // 4))
             random_event = random.randint(0, 100)
 
             if random_event >= 30:
                 await update_bank(ctx.author, earning)
-                await update_bank(member, -1*earning)
+                await update_bank(member, -1 * earning)
                 embed = discord.Embed(
                     title="Готово!",
-                    description=f"Вы удачно обокрали пользователя {member.mention}. Вы своровали {earning} <:coin:791004475098660904>",
-                    color=0x7289da)
+                    description=f"Вы удачно обокрали пользователя "
+                                f"{member.mention}. Вы своровали {earning} "
+                                 "<:coin:791004475098660904>",
+                    color=discord.Color.blurple()
+                )
                 await ctx.send(embed=embed)
 
             else:
-                plata = int(earning - (earning//4))
-                await update_bank(ctx.author, -1*plata)
+                plata = int(earning - (earning // 4))
+                await update_bank(ctx.author, -1 * plata)
                 await update_bank(member, earning)
                 embed = discord.Embed(
                     title="Oops...!",
-                    description=f"Вас поймали за воровство у {member.mention}. Вам выписали штраф в размере {earning} <:coin:791004475098660904>",
-                    color=0x7289da)
+                    description=f"Вас поймали за воровство у "
+                                f"{member.mention}. Вам выписали штраф в "
+                                f"размере {earning} "
+                                "<:coin:791004475098660904>",
+                    color=discord.Color.blurple()
+                )
                 await ctx.send(embed=embed)
 
             wait_rob.append(str(ctx.author.id))
-            await asyncio.sleep(6*60*60)
+            await asyncio.sleep(6 * 60 * 60)
             wait_rob.remove(str(ctx.author.id))
 
         else:
             embed = discord.Embed(
                 title="Ошибка!",
-                description=f"**{ctx.author.mention}** вы уже использовали эту команду. Команда работает раз в 6 часа.",
-                color=0xef3417)
+                description=f"**{ctx.author.mention}** вы уже использовали "
+                             "эту команду. Команда работает раз в 6 часа.",
+                color=discord.Color.red()
+            )
             await ctx.send(embed=embed)
 
 
@@ -399,8 +450,8 @@ async def open_account(user):
 
     if str(user.id) in users:
         users[str(user.id)]["Name"] = user.name
-        with open("JSONs/main.json", "w") as f:
-            json.dump(users, f, indent=2)
+        with open("JSONs/main.json", "w") as JSONFile:
+            json.dump(users, JSONFile, indent=4)
         return False
 
     else:
@@ -409,8 +460,8 @@ async def open_account(user):
         users[str(user.id)]["Wallet"] = 0
         users[str(user.id)]["Bank"] = 0
 
-    with open("JSONs/main.json", "w") as f:
-        json.dump(users, f, indent=2)
+    with open("JSONs/main.json", "w") as JSONFile:
+        json.dump(users, JSONFile, indent=4)
     return True
 
 
@@ -425,7 +476,7 @@ async def update_bank(user, change=0, mode="Wallet"):
     users[str(user.id)][mode] += change
 
     with open("JSONs/main.json", "w") as f:
-        json.dump(users, f, indent=2)
+        json.dump(users, f, indent=4)
 
     bal = [users[str(user.id)]["Wallet"], users[str(user.id)]["Bank"]]
     return bal

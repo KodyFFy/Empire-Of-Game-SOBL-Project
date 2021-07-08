@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from discord.ext import commands as BOT
 
 
-class Get_Info(BOT.Cog):
+class Get_botInfo(BOT.Cog):
     def __init__(self, Bot):
         self.Bot = Bot
 
@@ -19,12 +19,12 @@ class Get_Info(BOT.Cog):
         #game_block = block.find("section", {"class": "css-1nzrk0w-CardGrid-styles__groupWrapper"})
 
 
-        #game = block.find("span", {"data-testid": "offer-title-info-title", "class":"css-2ucwu", "data-component":"OfferTitleInfo"})
+        #game = block.find("span", {"data-testid": "offer-title-botInfo-title", "class":"css-2ucwu", "data-component":"OfferTitlebotInfo"})
 
-        #game_name = game_block.find("span", {"data-testid": "offer-title-info-title", "class": "css-2ucwu", "data-component": "OfferTitleInfo"})
+        #game_name = game_block.find("span", {"data-testid": "offer-title-botInfo-title", "class": "css-2ucwu", "data-component": "OfferTitlebotInfo"})
 
         #print(game_name.text)
         print(block)
 
 def setup(Bot):
-    Bot.add_cog(Get_Info(Bot))
+    Bot.add_cog(Get_botInfo(Bot))

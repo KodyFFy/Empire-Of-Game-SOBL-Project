@@ -1,39 +1,37 @@
-# import json
-# import random
-# import asyncio
+import json
+import random
 
 
+async def system(win_num, num_dps, num_tank, num_healer, dps, tank, healer):
+    wins = 0
 
-# async def system(win_num, num_dps, num_tank, num_healer, dps, tank, healer):
+    with open("Modules/JSONs/rpg.json", "r") as f:
+        users = json.load(f)
 
-# 	wins = 0
+    for i in range(num_dps):
+        player = dps[i]
+        lvl = users[str(player.id)]["Skills"]["DPS"]
 
-# 	with open("Modules/JSONs/rpg.json", "r") as f:
-# 		users = json.load(f)
+        end_win = lvl * win_num
+        wins += end_win
 
-# 	for i in range(num_dps):
-# 		player = dps[i]
-# 		lvl = users[str(player.id)]["Skills"]["DPS"]
+    for i in range(num_tank):
+        player = tank[i]
+        lvl = users[str(player.id)]["Skills"]["TANK"]
 
-# 		end_win = lvl * win_num
-# 		wins += end_win
-# 	for i in range(num_tank):
-# 		player = tank[i]
-# 		lvl = users[str(player.id)]["Skills"]["TANK"]
+        end_win = lvl * win_num
+        wins += end_win
 
-# 		end_win = lvl * win_num
-# 		wins += end_win
-# 	for i in range(num_healer):
-# 		player = healer[i]
-# 		lvl = users[str(player.id)]["Skills"]["HEALERS"]
+    for i in range(num_healer):
+        player = healer[i]
+        lvl = users[str(player.id)]["Skills"]["HEALERS"]
 
-# 		end_win = lvl * win_num
-# 		wins += end_win
+        end_win = lvl * win_num
+        wins += end_win
 
-# 	k = random.uniform(2,3.3)
+    k = random.uniform(2, 3.3)
 
-# 	k = round(k,1)
+    k = round(k, 1)
 
-
-# 	ends_win = wins * k
-# 	return ends_win
+    ends_win = wins * k
+    return ends_win
