@@ -3,7 +3,7 @@ import json
 import random
 
 import discord
-from config import info
+from config import botInfo
 from discord.ext import commands as BOT
 
 

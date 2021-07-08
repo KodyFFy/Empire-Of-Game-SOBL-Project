@@ -5,9 +5,9 @@ import random
 import discord
 import requests
 from bs4 import BeautifulSoup
-from config import info
+from config import botInfo
 from discord.ext import commands as BOT
-import Modules.economy as econom
+import Modules.economy as economy
 
 
 class Reactions(BOT.Cog):

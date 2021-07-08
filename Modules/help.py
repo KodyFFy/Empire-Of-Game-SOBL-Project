@@ -11,89 +11,102 @@ class Help(BOT.Cog):
     async def help(self, ctx):
         embed = discord.Embed(
             title="Список команд и их описание",
-            description="Зачеркуныте команды временно недоступны "
-                       f"~~{ArgParser.pref}команда~~",
-            color=0x7289da)
+            description="Зачеркуныте команды временно недоступны, "
+                       f"пример: ~~{ArgParser.pref}команда~~",
+            color=discord.Color.blurple()
+        )
 
         embed.add_field(
             name=f"{ArgParser.pref}help",
             value="Выводит этот список комманд",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
             name=f"{ArgParser.pref}cash / balance (или @player)",
             value="Показывает ваш или баланс другого игрока",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
             name=f"{ArgParser.pref}beg / work",
             value="Позволяет получить немного денег",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
             name=f"{ArgParser.pref}deposit (число) / put (число)",
             value="Позволяет положить средства в банк для защиты",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
             name=f"{ArgParser.pref}withdraw / decision",
             value="Команда для снаятия денег в банке",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
-            name=f"{ArgParser.pref}send (player) (число)",
+            name=f"{ArgParser.pref}send (@player) (число)",
             value="Вы отправить другому игроку деньги",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
             name=f"{ArgParser.pref}slots (ставка)",
             value="Вы можите сиграть в слоты",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
-            name=f"{ArgParser.pref}rob (player)",
+            name=f"{ArgParser.pref}rob (@player)",
             value="Вы ограбите игрока",
-            inline=True)
+            inline=False)
 
         embed.add_field(
             name=f"{ArgParser.pref}flip (ставка)",
             value="Вы подкините монетку, разумеется на деньги",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
             name=f"{ArgParser.pref}bonus",
-            value="Вы узнаете как получить бонус :)",
-            inline=True)
+            value="Вы узнаете как получить приятный бонус :)",
+            inline=False
+        )
 
         embed.add_field(
-            name=f"{ArgParser.pref}use (промокод)",
-            value="Вы получите что-то интересное! ",
-            inline=True)
+            name=f"{ArgParser.pref}promouse (промокод)",
+            value="Вы получите что-то интересное!",
+            inline=False
+        )
 
         embed.add_field(
             name=f"{ArgParser.pref}listpromo",
             value="Посмотреть список промокодов, только для админов",
-            inline=True)
+            inline=False
+        )
 
         embed.add_field(
-            name=f"{ArgParser.pref}del_promo (промокод)",
-            value="Удалить промокод",
-            inline=True)
+            name=f"{ArgParser.pref}delpromo (промокод)",
+            value="Удалить промокод, только для админов",
+            inline=False
+        )
 
         embed.add_field(
-            name=f"{ArgParser.pref}create_promo (промокод) (число активаций)",
+            name=f"{ArgParser.pref}createpromo (промокод) (число активаций)",
             value="Создать промокод для с n числои активаций, "
                   "если n=0, то безограничений",
-            inline=True)
-
-"""
-        embed.add_field(
-            name=f"{ArgParser.pref}e?expression (число)",
-            value="Математическая игра",
-            inline=Thue
+            inline=False
         )
+
+        # embed.add_field(
+        #   name=f"{ArgParser.pref}e?expression (число)",
+        #   value="Математическая игра",
+        #   inline=False
+        # )
         await ctx.send(embed=embed)
-"""
+
 
 
 def setup(Bot):

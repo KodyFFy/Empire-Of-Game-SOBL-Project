@@ -32,7 +32,9 @@ async def GetMessage(
             check=lambda message: message.author == ctx.author
             and message.channel == ctx.channel
         )
+
         if msg:
             return msg.content
+
     except asyncio.TimeoutError:
         return False
